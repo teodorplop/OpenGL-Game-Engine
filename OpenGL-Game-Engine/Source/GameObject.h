@@ -1,16 +1,17 @@
 #pragma once
 
+#include "Export.h"
+
 #include <vector>
-#include <typeinfo>
 #include "ComponentSystem.h"
 
 class GameObject {
 	std::vector<Component*> components;
 public:
-	template <class T> T* AddComponent();
-	template <class T> T* AddMissingComponent();
-	template <class T> T* GetComponent();
-	void RemoveComponent(Component* component);
+	template <class T> OPENGL_ENGINE_API T* AddComponent();
+	template <class T> OPENGL_ENGINE_API T* AddMissingComponent();
+	template <class T> OPENGL_ENGINE_API T* GetComponent();
+	OPENGL_ENGINE_API void RemoveComponent(Component* component);
 };
 
 template <class T> T* GameObject::AddComponent() {

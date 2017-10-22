@@ -1,12 +1,14 @@
 #pragma once
 
+#include "Export.h"
+
 #include <unordered_set>
 
 class Component {
 	friend class ComponentSystem;
 
 protected:
-	virtual void Update() {}
+	virtual OPENGL_ENGINE_API void Update() {}
 };
 
 class ComponentSystem {

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Export.h"
+
 #include "Window.h"
 
 class Application {
@@ -11,5 +13,5 @@ private:
 	~Application();
 
 public:
-	Application(const char* windowName, int width, int height);
+	OPENGL_ENGINE_API Application(const char* windowName, int width, int height);
 };
