@@ -9,14 +9,14 @@
 
 //#include "Renderer.h"
 
-Application::Application(const char* windowName, int width, int height) {
+Application::Application(const char* windowName, int width, int height, bool fullscreen) {
 	if (!glfwInit()) {
 		fprintf(stderr, "Failed to initialize glfw.");
 		Sleep(2000);
 		exit(1);
 	}
 
-	this->window = new Window(windowName, width, height);
+	this->window = new Window(windowName, width, height, fullscreen);
 	this->desiredDeltaTime = 1.0f / 60.0f;
 
 	GLenum err = glewInit();
@@ -60,6 +60,4 @@ void Application::Run() {
 		window->PollEvents();
 		window->SwapBuffers();
 	}
-	 
-	delete this;
 }

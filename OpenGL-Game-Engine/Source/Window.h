@@ -7,12 +7,15 @@ class Window {
 private:
 	const char* title;
 	int width, height;
+	bool fullscreen;
 	GLFWwindow* window;
 
 	bool Init();
 
 public:
-	Window(const char* title, int width, int height);
+	Window(const char* title, int width, int height, bool fullscreen);
+	void SetResolution(int width, int height);
+
 	// Returns true if we received a close window action
 	bool Closed();
 

@@ -2,13 +2,13 @@
 
 #include <cstdio>
 
-Window::Window(const char* title, int width, int height) {
-	this->title = title, this->width = width, this->height = height;
+Window::Window(const char* title, int width, int height, bool fullscreen) {
+	this->title = title, this->width = width, this->height = height, this->fullscreen = fullscreen;
 	Init();
 }
 
 bool Window::Init() {
-	window = glfwCreateWindow(width, height, title, NULL, NULL);
+	window = glfwCreateWindow(width, height, title, fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 	if (!window) {
 		fprintf(stderr, "Failed to create GLFW window!");
 		return false;
@@ -20,6 +20,10 @@ bool Window::Init() {
 
 	glfwMakeContextCurrent(window);
 	return true;
+}
+
+void Window::SetResolution(int width, int height) {
+	glfwSetWindowSize(window, width, height);
 }
 
 void Window::PollEvents() {

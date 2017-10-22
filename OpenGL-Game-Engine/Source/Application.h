@@ -13,5 +13,5 @@ private:
 	~Application();
 
 public:
-	OPENGL_ENGINE_API Application(const char* windowName, int width, int height);
+	OPENGL_ENGINE_API Application(const char* windowName, int width, int height, bool fullscreen);
 };

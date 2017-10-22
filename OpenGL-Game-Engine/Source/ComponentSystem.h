@@ -3,34 +3,24 @@
 #include "Export.h"
 
 #include <unordered_set>
+#include <unordered_map>
 
 class Component {
 	friend class ComponentSystem;
 
 protected:
-	virtual OPENGL_ENGINE_API void Update() {}
+	OPENGL_ENGINE_API virtual void Update();
 };
 
 class ComponentSystem {
 private:
 	static std::unordered_set<Component*> components;
+	static std::unordered_map<const char*, Component*(*)()> reflection;
 
 public:
-	static void Register(Component* component);
-	static void Unregister(Component* component);
+	OPENGL_ENGINE_API static void Register(const char* name, Component* (create()));
+
+	static Component* CreateComponent(const char* name);
+	static void DestroyComponent(Component* component);
 	static void Update();
 };
-
-std::unordered_set<Component*> ComponentSystem::components;
-
-void ComponentSystem::Register(Component* component) {
-	components.insert(component);
-}
-void ComponentSystem::Unregister(Component* component) {
-	components.erase(component);
-	delete component;
-}
-void ComponentSystem::Update() {
-	for (auto component : components)
-		component->Update();
-}
