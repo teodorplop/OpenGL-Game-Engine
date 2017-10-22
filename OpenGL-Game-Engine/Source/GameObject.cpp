@@ -13,9 +13,9 @@ GameObject::~GameObject() {
 }
 
 Component* GameObject::AddComponent(const char* name) {
-	Component* comp = ComponentSystem::CreateComponent(name);
+	Component* comp = ComponentSystem::CreateComponent(name, this);
 	if (comp != nullptr) {
-		components.push_back(new Component());
+		components.push_back(comp);
 	}
 	return comp;
 }
@@ -37,4 +37,12 @@ void GameObject::RemoveComponent(Component* component) {
 		ComponentSystem::DestroyComponent(components[idx]);
 		components.erase(components.begin() + idx);
 	}
+}
+
+bool GameObject::IsActive() {
+	return active;
+}
+
+void GameObject::SetActive(bool active) {
+	this->active = active;
 }

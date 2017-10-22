@@ -1,4 +1,9 @@
 #include "ComponentSystem.h"
+#include "GameObject.h"
+
+GameObject* Component::GetGameObject() {
+	return gameObject;
+}
 
 void Component::Update() {}
 
@@ -9,7 +14,7 @@ void ComponentSystem::Register(const char* name, Component* (create())) {
 	reflection.insert({ name, create });
 }
 
-Component* ComponentSystem::CreateComponent(const char* name) {
+Component* ComponentSystem::CreateComponent(const char* name, GameObject* gameObject) {
 	auto it = reflection.find(name);
 	if (it == reflection.end()) {
 		fprintf(stderr, "Component %s not registered.", name);
@@ -17,6 +22,7 @@ Component* ComponentSystem::CreateComponent(const char* name) {
 	}
 
 	Component* component = it->second();
+	component->gameObject = gameObject;
 	components.insert(component);
 	return component;
 }
@@ -27,5 +33,6 @@ void ComponentSystem::DestroyComponent(Component* component) {
 
 void ComponentSystem::Update() {
 	for (auto component : components)
-		component->Update();
+		if (component->gameObject->IsActive() && component->enabled)
+			component->Update();
 }
