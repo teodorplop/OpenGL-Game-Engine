@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Export.h"
 #include "Window.h"
 #include <include/glm.h>
 
@@ -32,18 +33,18 @@ public:
 	static void EndOfFrame();
 
 	// Returns true if we pressed the key THIS FRAME
-	static bool GetKeyDown(int key);
+	OPENGL_ENGINE_API static bool GetKeyDown(int key);
 	// Returns true if the key is pressed
-	static bool GetKey(int key);
+	OPENGL_ENGINE_API static bool GetKey(int key);
 	// Returns true if we released the key THIS FRAME
-	static bool GetKeyUp(int key);
+	OPENGL_ENGINE_API static bool GetKeyUp(int key);
 
 	// Same, but for mouse buttons
-	static bool GetMouseButtonDown(int button);
-	static bool GetMouseButton(int button);
-	static bool GetMouseButtonUp(int button);
+	OPENGL_ENGINE_API static bool GetMouseButtonDown(int button);
+	OPENGL_ENGINE_API static bool GetMouseButton(int button);
+	OPENGL_ENGINE_API static bool GetMouseButtonUp(int button);
 
-	static float GetScrollWheel();
+	OPENGL_ENGINE_API static float GetScrollWheel();
 	// Returns mouse position in screen coordinates
-	static glm::vec2 GetMousePosition();
+	OPENGL_ENGINE_API static glm::vec2 GetMousePosition();
 };
