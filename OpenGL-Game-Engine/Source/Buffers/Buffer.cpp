@@ -5,10 +5,6 @@
 using namespace std;
 using namespace glm;
 
-Buffer::Buffer(int componentCount, bool dynamic) {
-	glGenBuffers(1, &bufferID);
-	usage = dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
-}
 Buffer::Buffer(const vector<float>& data, bool dynamic) {
 	glGenBuffers(1, &bufferID);
 	SetData(data, dynamic);

@@ -37,8 +37,12 @@ void Material::SetTexture(const string& name, Texture* value) {
 	textures[name] = value;
 }
 
-void Material::Bind() {
+void Material::Prepare(mat4 model, mat4 view, mat4 proj) {
 	shader->Bind();
+
+	shader->SetUniformMatrix4fv("model", model);
+	shader->SetUniformMatrix4fv("view", view);
+	shader->SetUniformMatrix4fv("proj", proj);
 
 	for (auto& pair : ints)
 		shader->SetUniform1i(pair.first.c_str(), pair.second);

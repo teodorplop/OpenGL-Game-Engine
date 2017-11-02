@@ -13,7 +13,6 @@ private:
 	unsigned int usage;
 
 public:
-	Buffer(int componentCount, bool dynamic = false);
 	Buffer(const std::vector<float>& data, bool dynamic = false);
 	Buffer(const std::vector<glm::vec2>& data, bool dynamic = false);
 	Buffer(const std::vector<glm::vec3>& data, bool dynamic = false);

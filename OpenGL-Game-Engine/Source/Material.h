@@ -34,6 +34,6 @@ public:
 	OPENGL_ENGINE_API void SetColor(const std::string& name, Color value);
 	OPENGL_ENGINE_API void SetTexture(const std::string& name, Texture* texture);
 
-	void Bind();
+	void Prepare(glm::mat4 model, glm::mat4 view, glm::mat4 proj);
 	void Unbind();
 };

@@ -27,7 +27,7 @@ Mesh* CreateMesh() {
 	vector<vec2> uvs;
 	vector<unsigned int> indices;
 
-	vertices.push_back(vec3(-0.6, -0.5, 0));
+	vertices.push_back(vec3(-0.5, -0.5, 0));
 	vertices.push_back(vec3(0.5, -0.5, 0));
 	vertices.push_back(vec3(0.5, 0.5, 0));
 	vertices.push_back(vec3(-0.5, 0.5, 0));
@@ -37,10 +37,10 @@ Mesh* CreateMesh() {
 	normals.push_back(vec3(0, 0, 0));
 	normals.push_back(vec3(0, 0, 0));
 
-	colors.push_back(Color::white);
-	colors.push_back(Color::white);
-	colors.push_back(Color::white);
-	colors.push_back(Color::white);
+	colors.push_back(Color::red);
+	colors.push_back(Color::green);
+	colors.push_back(Color::blue);
+	colors.push_back(Color::yellow);
 
 	uvs.push_back(vec2(0, 0));
 	uvs.push_back(vec2(0, 0));
@@ -74,6 +74,11 @@ void CreateRandomObj() {
 	GameObject* cameraGO = GameObject::Create();
 	Camera* camera = (Camera*)cameraGO->AddComponent("Camera");
 	camera->SetClearColor(Color::gray);
+	camera->SetAspectRatio(4 / 3);
+	camera->SetFarClip(10);
+	camera->SetNearClip(0.1f);
+	camera->SetFieldOfView(50);
+	camera->GetGameObject()->GetTransform()->SetPosition(vec3(1, 0, -7));
 
 	MeshRenderer* mr = (MeshRenderer*)go->AddComponent("MeshRenderer");
 	mr->SetMesh(mesh);

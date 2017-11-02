@@ -73,7 +73,7 @@ void Shader::Unbind() {
 
 void Shader::SetUniformMatrix4fv(const char* name, const glm::mat4& matrix) {
 	GLint matrixID = glGetUniformLocation(shaderProgram, name);
-	glUniformMatrix4fv(matrixID, 1, GL_TRUE, &matrix[0][0]);
+	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &matrix[0][0]);
 }
 void Shader::SetUniform3f(const char* name, const glm::vec3& vector) {
 	GLint vectorID = glGetUniformLocation(shaderProgram, name);

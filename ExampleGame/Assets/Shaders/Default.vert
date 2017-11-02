@@ -2,6 +2,10 @@
 
 #version 400
 
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 proj;
+
 layout (location = 0) in vec4 inPosition;
 layout (location = 1) in vec3 inNormal;
 layout (location = 2) in vec4 inColor;
@@ -12,6 +16,6 @@ out DATA {
 } Out;
 
 void main() {
-	gl_Position = inPosition;
+	gl_Position = proj * view * model * inPosition;
 	Out.color = inColor;
 }

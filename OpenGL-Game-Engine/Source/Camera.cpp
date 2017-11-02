@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include "MeshRenderer.h"
+#include "GameObject.h"
+#include "Transfom.h"
 
 #include <include\gl.h>
 
@@ -11,6 +13,7 @@ unordered_set<MeshRenderer*> Camera::renderers;
 
 Camera::Camera() {
 	cameras.push_back(this);
+	projectionMatrix = mat4(1);
 }
 Camera::~Camera() {
 	int idx = 0;
@@ -29,10 +32,15 @@ void Camera::Unregister(MeshRenderer* renderer) {
 }
 void Camera::Render() {
 	Color clearColor;
+	glm::mat4 model, view, proj;
 	Mesh* mesh;
 	Material* mat;
+
 	for (auto camera : cameras) {
 		clearColor = camera->clearColor;
+
+		view = camera->GetGameObject()->GetTransform()->GetModelMatrix();
+		proj = camera->GetProjectionMatrix();
 
 		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -41,7 +49,9 @@ void Camera::Render() {
 			mesh = renderer->GetMesh();
 			mat = renderer->GetMaterial();
 
-			mat->Bind();
+			model = renderer->GetGameObject()->GetTransform()->GetModelMatrix();
+
+			mat->Prepare(model, view, proj);
 			mesh->Draw();
 			mat->Unbind();
 		}
