@@ -4,7 +4,7 @@
 
 class GameObject;
 
-class Component {
+class OPENGL_ENGINE_API Component {
 	friend class ComponentSystem;
 
 private:
@@ -14,7 +14,7 @@ public:
 	bool enabled;
 
 protected:
-	OPENGL_ENGINE_API virtual void Update();
+	virtual void Update();
 
 public:
 	GameObject* GetGameObject();

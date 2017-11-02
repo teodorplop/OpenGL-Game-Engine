@@ -17,6 +17,7 @@ Component* ComponentSystem::CreateComponent(const char* name, GameObject* gameOb
 
 	Component* component = it->second();
 	component->gameObject = gameObject;
+	component->enabled = true;
 	components.insert(component);
 	return component;
 }

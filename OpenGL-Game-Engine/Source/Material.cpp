@@ -3,6 +3,14 @@
 using namespace std;
 using namespace glm;
 
+Material* Material::Create(Shader* shader) {
+	return new Material(shader);
+}
+
+void Material::Destroy(Material* mat) {
+	delete mat;
+}
+
 Material::Material(Shader* shader) {
 	this->shader = shader;
 }

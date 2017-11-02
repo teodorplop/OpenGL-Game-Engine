@@ -1,6 +1,16 @@
 #include "Shader.h"
 #include "Utils/FileIO.h"
 
+#include <include\gl.h>
+
+Shader* Shader::Create(const char* vertexFile, const char* fragmentFile) {
+	return new Shader(vertexFile, fragmentFile);
+}
+
+void Shader::Destroy(Shader* shader) {
+	delete shader;
+}
+
 GLuint Shader::Compile(GLuint type, const char* source) {
 	GLuint shader = glCreateShader(type);
 	glShaderSource(shader, 1, &source, NULL);

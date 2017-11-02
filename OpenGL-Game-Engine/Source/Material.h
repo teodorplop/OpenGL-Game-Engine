@@ -20,8 +20,11 @@ class Material {
 	std::unordered_map<std::string, Color> colors;
 	std::unordered_map<std::string, Texture*> textures;
 
+	Material(Shader* shader);
+
 public:
-	OPENGL_ENGINE_API Material(Shader* shader);
+	OPENGL_ENGINE_API static Material* Create(Shader* shader);
+	OPENGL_ENGINE_API static void Destroy(Material* mat);
 
 	OPENGL_ENGINE_API void SetInt(const std::string& name, int value);
 	OPENGL_ENGINE_API void SetFloat(const std::string& name, float value);

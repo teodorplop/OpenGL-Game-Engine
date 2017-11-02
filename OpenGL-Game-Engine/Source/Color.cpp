@@ -13,3 +13,8 @@ Color::Color() {}
 Color::Color(float r, float g, float b, float a) {
 	this->r = r, this->g = g, this->b = b, this->a = a;
 }
+
+std::ostream& operator<<(std::ostream& out, const Color& color) {
+	out << "Color(" << color.r << ", " << color.g << ", " << color.b << ")\n";
+	return out;
+}

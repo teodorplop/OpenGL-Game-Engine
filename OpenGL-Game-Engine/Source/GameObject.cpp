@@ -12,6 +12,7 @@ void GameObject::Destroy(GameObject* obj) {
 }
 
 GameObject::GameObject() {
+	active = true;
 }
 
 GameObject::~GameObject() {
@@ -53,33 +54,4 @@ bool GameObject::IsActive() const {
 
 void GameObject::SetActive(bool active) {
 	this->active = active;
-}
-
-void GameObject::AddChild(GameObject* child) {
-	children.push_back(child);
-}
-
-void GameObject::RemoveChild(GameObject* child) {
-	int idx = 0;
-	while (idx < children.size() && children[idx] != child)
-		++idx;
-
-	if (idx < children.size())
-		children.erase(children.begin() + idx);
-}
-
-void GameObject::SetParent(GameObject* parent) {
-	if (this->parent != nullptr)
-		this->parent->RemoveChild(this);
-	this->parent = parent;
-	if (this->parent != nullptr)
-		this->parent->AddChild(this);
-}
-
-GameObject* GameObject::GetParent() const {
-	return parent;
-}
-
-std::vector<GameObject*> GameObject::GetChildren() const {
-	return children;
 }

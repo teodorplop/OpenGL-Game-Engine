@@ -10,16 +10,10 @@ class GameObject {
 
 	bool active;
 
-	GameObject* parent;
-	std::vector<GameObject*> children;
-
-	void RemoveChild(GameObject* child);
-	void AddChild(GameObject* child);
-
-public:
 	GameObject();
 	~GameObject();
 
+public:
 	OPENGL_ENGINE_API static GameObject* Create();
 	OPENGL_ENGINE_API static void Destroy(GameObject* obj);
 
@@ -29,8 +23,4 @@ public:
 
 	OPENGL_ENGINE_API bool IsActive() const;
 	OPENGL_ENGINE_API void SetActive(bool active);
-
-	OPENGL_ENGINE_API void SetParent(GameObject* gameObject);
-	OPENGL_ENGINE_API GameObject* GetParent() const;
-	OPENGL_ENGINE_API std::vector<GameObject*> GetChildren() const;
 };

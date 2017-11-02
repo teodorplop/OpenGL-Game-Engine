@@ -11,6 +11,10 @@
 
 //#include "Renderer.h"
 
+Application* Application::Create(const char* windowName, int width, int height, bool fullscreen) {
+	return new Application(windowName, width, height, fullscreen);
+}
+
 Application::Application(const char* windowName, int width, int height, bool fullscreen) {
 	if (!glfwInit()) {
 		fprintf(stderr, "Failed to initialize glfw. Quit...");

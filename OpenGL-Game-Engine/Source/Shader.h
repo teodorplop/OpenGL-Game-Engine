@@ -1,17 +1,20 @@
 #pragma once
 
-#include <include\gl.h>
+#include "Export.h"
 #include <include\glm.h>
 
 class Shader {
 private:
-	GLuint vertexShader, fragmentShader, shaderProgram;
+	unsigned int vertexShader, fragmentShader, shaderProgram;
 	void CompileShaders(const char* vertexSource, const char* fragmentSource);
-	GLuint Compile(GLuint type, const char* source);
+	unsigned int Compile(unsigned int type, const char* source);
 
-public:
 	Shader(const char* vertexFile, const char* fragmentFile);
 	~Shader();
+
+public:
+	OPENGL_ENGINE_API static Shader* Create(const char* vertexFile, const char* fragmentFile);
+	OPENGL_ENGINE_API static void Destroy(Shader* shader);
 
 	void Bind();
 	void Unbind();

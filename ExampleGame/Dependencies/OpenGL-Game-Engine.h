@@ -6,9 +6,11 @@
 #define OPENGL_ENGINE_API __declspec(dllimport)
 #endif
 
+#include <glm.h>
 #include <vector>
 
 class Application;
+class Camera;
 struct Color;
 class Component;
 class ComponentSystem;
@@ -24,7 +26,7 @@ class Time;
 
 class Application {
 public:
-	OPENGL_ENGINE_API Application(const char* windowName, int width, int height, bool fullscreen);
+	OPENGL_ENGINE_API static Application* Create(const char* windowName, int width, int height, bool fullscreen);
 	OPENGL_ENGINE_API void Run();
 	OPENGL_ENGINE_API void Quit();
 };
@@ -40,7 +42,25 @@ struct Color {
 
 class Component {
 protected:
-	virtual OPENGL_ENGINE_API void Update();
+	OPENGL_ENGINE_API virtual void Update();
+public:
+	bool enabled;
+	OPENGL_ENGINE_API GameObject* GetGameObject();
+};
+
+class Camera : public Component {
+public:
+	OPENGL_ENGINE_API float GetAspectRatio() const;
+	OPENGL_ENGINE_API void SetAspectRatio(float aspect);
+
+	OPENGL_ENGINE_API float GetNearClip() const;
+	OPENGL_ENGINE_API void SetNearClip(float near);
+
+	OPENGL_ENGINE_API float GetFarClip() const;
+	OPENGL_ENGINE_API void SetFarClip(float far);
+
+	OPENGL_ENGINE_API float GetFieldOfView() const;
+	OPENGL_ENGINE_API void SetFieldOfView(float fov);
 };
 
 class ComponentSystem {
@@ -59,10 +79,6 @@ public:
 
 	OPENGL_ENGINE_API bool IsActive() const;
 	OPENGL_ENGINE_API void SetActive(bool active);
-
-	OPENGL_ENGINE_API void SetParent(GameObject* gameObject);
-	OPENGL_ENGINE_API GameObject* GetParent() const;
-	OPENGL_ENGINE_API std::vector<GameObject*> GetChildren() const;
 };
 
 class Input {
@@ -76,38 +92,45 @@ public:
 	OPENGL_ENGINE_API static bool GetMouseButtonUp(int button);
 
 	OPENGL_ENGINE_API static float GetScrollWheel();
-	//OPENGL_ENGINE_API static glm::vec2 GetMousePosition();
+	OPENGL_ENGINE_API static glm::vec2 GetMousePosition();
 };
 
 class Material {
 public:
-	OPENGL_ENGINE_API Material(Shader* shader);
+	OPENGL_ENGINE_API static Material* Create(Shader* shader);
+	OPENGL_ENGINE_API static void Destroy(Material* material);
 
 	OPENGL_ENGINE_API void SetInt(const std::string& name, int value);
 	OPENGL_ENGINE_API void SetFloat(const std::string& name, float value);
-	//OPENGL_ENGINE_API void SetVec2(const std::string& name, glm::vec2 value);
-	//OPENGL_ENGINE_API void SetVec3(const std::string& name, glm::vec3 value);
-	//OPENGL_ENGINE_API void SetVec4(const std::string& name, glm::vec4 value);
+	OPENGL_ENGINE_API void SetVec2(const std::string& name, glm::vec2 value);
+	OPENGL_ENGINE_API void SetVec3(const std::string& name, glm::vec3 value);
+	OPENGL_ENGINE_API void SetVec4(const std::string& name, glm::vec4 value);
 	OPENGL_ENGINE_API void SetColor(const std::string& name, Color value);
 	OPENGL_ENGINE_API void SetTexture(const std::string& name, Texture* texture);
 };
 
 class Mesh {
 public:
-	//OPENGL_ENGINE_API void SetVertices(std::vector<glm::vec3> vertices);
-	//OPENGL_ENGINE_API void SetNormals(std::vector<glm::vec3> normals);
-	//OPENGL_ENGINE_API void SetUV(std::vector<glm::vec2> uvs);
+	OPENGL_ENGINE_API void SetVertices(std::vector<glm::vec3> vertices);
+	OPENGL_ENGINE_API void SetNormals(std::vector<glm::vec3> normals);
+	OPENGL_ENGINE_API void SetUV(std::vector<glm::vec2> uvs);
 	OPENGL_ENGINE_API void SetIndices(std::vector<unsigned int> indices);
 
 	OPENGL_ENGINE_API void Clear();
 };
 
-class MeshRenderer {
+class MeshRenderer : public Component {
 public:
 	OPENGL_ENGINE_API void SetMesh(Mesh* mesh);
 	OPENGL_ENGINE_API void SetMaterial(Material* material);
 	OPENGL_ENGINE_API Mesh* GetMesh();
 	OPENGL_ENGINE_API Material* GetMaterial();
+};
+
+class Shader {
+public:
+	OPENGL_ENGINE_API static Shader* Create(const char* vertexFile, const char* fragmentFile);
+	OPENGL_ENGINE_API static void Destroy(Shader* shader);
 };
 
 class Texture2D {
@@ -123,3 +146,5 @@ public:
 	OPENGL_ENGINE_API static float RealtimeSinceStartup();
 	OPENGL_ENGINE_API static float DeltaTime();
 };
+
+OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);

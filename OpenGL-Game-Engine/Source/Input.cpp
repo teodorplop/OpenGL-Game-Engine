@@ -1,5 +1,8 @@
 #include "Input.h"
 
+#include <include\gl.h>
+#include <include\glm.h>
+
 Window* Input::window = NULL;
 float Input::scroll;
 glm::vec2 Input::mousePosition;
