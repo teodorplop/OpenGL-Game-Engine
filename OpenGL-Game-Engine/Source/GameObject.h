@@ -4,8 +4,10 @@
 
 #include <vector>
 #include "ComponentSystem.h"
+#include "Transfom.h"
 
 class GameObject {
+	Transform* transform;
 	std::vector<Component*> components;
 
 	bool active;
@@ -16,6 +18,8 @@ class GameObject {
 public:
 	OPENGL_ENGINE_API static GameObject* Create();
 	OPENGL_ENGINE_API static void Destroy(GameObject* obj);
+
+	OPENGL_ENGINE_API Transform* GetTransform() const;
 
 	OPENGL_ENGINE_API Component* AddComponent(const char* name);
 	OPENGL_ENGINE_API Component* GetComponent(const char* name) const;

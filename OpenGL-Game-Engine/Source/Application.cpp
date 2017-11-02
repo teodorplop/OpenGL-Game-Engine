@@ -8,8 +8,7 @@
 #include "Input.h"
 #include "Time.h"
 #include "ComponentSystem.h"
-
-//#include "Renderer.h"
+#include "Camera.h"
 
 Application* Application::Create(const char* windowName, int width, int height, bool fullscreen) {
 	return new Application(windowName, width, height, fullscreen);
@@ -59,8 +58,8 @@ void Application::Run() {
 		// Then we update each registered object
 		ComponentSystem::Update();
 
-		// Render all registered renderables using this camera
-		//Renderer::Render(camera);
+		// Render all cameras
+		Camera::Render();
 
 		// Input needs to know when the frame ends, in order to clear its stuff
 		Input::EndOfFrame();

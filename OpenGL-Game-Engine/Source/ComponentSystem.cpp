@@ -1,17 +1,18 @@
 #include "ComponentSystem.h"
 #include "GameObject.h"
+#include <iostream>
 
 std::unordered_set<Component*> ComponentSystem::components;
-std::unordered_map<const char*, Component*(*)()> ComponentSystem::reflection;
+std::unordered_map<std::string, Component*(*)()> ComponentSystem::reflection;
 
-void ComponentSystem::Register(const char* name, Component* (create())) {
+void ComponentSystem::Register(std::string name, Component* (create())) {
 	reflection.insert({ name, create });
 }
 
-Component* ComponentSystem::CreateComponent(const char* name, GameObject* gameObject) {
+Component* ComponentSystem::CreateComponent(std::string name, GameObject* gameObject) {
 	auto it = reflection.find(name);
 	if (it == reflection.end()) {
-		fprintf(stderr, "Component %s not registered.", name);
+		std::cout << "Component" << name << " not registered.";
 		return nullptr;
 	}
 

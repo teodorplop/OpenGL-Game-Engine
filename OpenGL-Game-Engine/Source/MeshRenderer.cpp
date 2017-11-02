@@ -1,5 +1,15 @@
 #include "MeshRenderer.h"
 
+#include "Camera.h"
+
+MeshRenderer::MeshRenderer() {
+	Camera::Register(this);
+}
+
+MeshRenderer::~MeshRenderer() {
+	Camera::Unregister(this);
+}
+
 void MeshRenderer::SetMesh(Mesh* mesh) {
 	this->mesh = mesh;
 }

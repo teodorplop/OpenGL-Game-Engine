@@ -23,6 +23,7 @@ class Shader;
 class Texture;
 class Texture2D;
 class Time;
+class Transform;
 
 class Application {
 public:
@@ -50,6 +51,8 @@ public:
 
 class Camera : public Component {
 public:
+	OPENGL_ENGINE_API void SetClearColor(Color color);
+
 	OPENGL_ENGINE_API float GetAspectRatio() const;
 	OPENGL_ENGINE_API void SetAspectRatio(float aspect);
 
@@ -65,13 +68,15 @@ public:
 
 class ComponentSystem {
 public:
-	OPENGL_ENGINE_API static void Register(const char* name, Component* (create()));
+	OPENGL_ENGINE_API static void Register(std::string name, Component* (create()));
 };
 
 class GameObject {
 public:
 	OPENGL_ENGINE_API static GameObject* Create();
 	OPENGL_ENGINE_API static void Destroy(GameObject* obj);
+
+	OPENGL_ENGINE_API Transform* GetTransform() const;
 
 	OPENGL_ENGINE_API Component* AddComponent(const char* name);
 	OPENGL_ENGINE_API Component* GetComponent(const char* name) const;
@@ -111,8 +116,12 @@ public:
 
 class Mesh {
 public:
+	OPENGL_ENGINE_API static Mesh* Create();
+	OPENGL_ENGINE_API static Mesh* Create(const char* filename);
+
 	OPENGL_ENGINE_API void SetVertices(std::vector<glm::vec3> vertices);
 	OPENGL_ENGINE_API void SetNormals(std::vector<glm::vec3> normals);
+	OPENGL_ENGINE_API void SetColors(std::vector<Color> colors);
 	OPENGL_ENGINE_API void SetUV(std::vector<glm::vec2> uvs);
 	OPENGL_ENGINE_API void SetIndices(std::vector<unsigned int> indices);
 
@@ -145,6 +154,21 @@ class Time {
 public:
 	OPENGL_ENGINE_API static float RealtimeSinceStartup();
 	OPENGL_ENGINE_API static float DeltaTime();
+};
+
+class Transform : public Component {
+public:
+	OPENGL_ENGINE_API glm::vec3 GetPosition();
+	OPENGL_ENGINE_API glm::vec3 GetRotation();
+	OPENGL_ENGINE_API glm::vec3 GetScale();
+
+	OPENGL_ENGINE_API void SetPosition(glm::vec3 pos);
+	OPENGL_ENGINE_API void SetRotation(glm::vec3 rot);
+	OPENGL_ENGINE_API void SetScale(glm::vec3 scale);
+
+	OPENGL_ENGINE_API void TranslateBy(glm::vec3 distance);
+	OPENGL_ENGINE_API void RotateBy(glm::vec3 rot);
+	OPENGL_ENGINE_API void ScaleBy(glm::vec3 scale);
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);

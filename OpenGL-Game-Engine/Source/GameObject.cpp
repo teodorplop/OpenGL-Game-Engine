@@ -13,12 +13,17 @@ void GameObject::Destroy(GameObject* obj) {
 
 GameObject::GameObject() {
 	active = true;
+	transform = new Transform();
 }
 
 GameObject::~GameObject() {
 	for (int i = 0; i < components.size(); ++i)
 		ComponentSystem::DestroyComponent(components[i]);
 	components.clear();
+}
+
+Transform* GameObject::GetTransform() const {
+	return transform;
 }
 
 Component* GameObject::AddComponent(const char* name) {

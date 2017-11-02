@@ -7,6 +7,10 @@ using namespace std;
 IndexBuffer::IndexBuffer(bool dynamic) {
 	glGenBuffers(1, &bufferID);
 	usage = dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
+
+	Bind();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 0, nullptr, usage);
+	Unbind();
 }
 
 IndexBuffer::IndexBuffer(const std::vector<unsigned int>& data, bool dynamic) {
@@ -23,7 +27,7 @@ void IndexBuffer::SetData(const vector<unsigned int>& data, bool dynamic) {
 	usage = dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
 
 	Bind();
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), &data[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), &data[0], usage);
 	Unbind();
 }
 

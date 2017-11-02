@@ -5,17 +5,37 @@
 #include <include\glm.h>
 #include <vector>
 
+#include "Buffers\Buffer.h"
+#include "Buffers\VertexArray.h"
+#include "Buffers\IndexBuffer.h"
+#include "Color.h"
+
 class Mesh {
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
+	std::vector<Color> colors;
 	std::vector<glm::vec2> uvs;
 	std::vector<unsigned int> indices;
 
-	bool isDirty;
+	Buffer *vertexBuffer, *normalBuffer, *colorBuffer, *uvBuffer;
+	VertexArray* vao;
+	IndexBuffer* indexBuffer;
+
+	void GenerateGLMesh();
+
+	Mesh();
+	void Bind();
+	void Unbind();
 
 public:
+	void Draw();
+
+	OPENGL_ENGINE_API static Mesh* Create();
+	OPENGL_ENGINE_API static Mesh* Create(const char* filename);
+
 	OPENGL_ENGINE_API void SetVertices(std::vector<glm::vec3> vertices);
 	OPENGL_ENGINE_API void SetNormals(std::vector<glm::vec3> normals);
+	OPENGL_ENGINE_API void SetColors(std::vector<Color> colors);
 	OPENGL_ENGINE_API void SetUV(std::vector<glm::vec2> uvs);
 	OPENGL_ENGINE_API void SetIndices(std::vector<unsigned int> indices);
 

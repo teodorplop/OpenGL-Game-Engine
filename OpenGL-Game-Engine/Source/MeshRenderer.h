@@ -8,7 +8,11 @@
 class MeshRenderer : public Component {
 	Mesh* mesh;
 	Material* mat;
+
 public:
+	MeshRenderer();
+	~MeshRenderer();
+
 	OPENGL_ENGINE_API void SetMesh(Mesh* mesh);
 	OPENGL_ENGINE_API void SetMaterial(Material* material);
 	OPENGL_ENGINE_API Mesh* GetMesh();
