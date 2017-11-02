@@ -1,12 +1,6 @@
 #include "ComponentSystem.h"
 #include "GameObject.h"
 
-GameObject* Component::GetGameObject() {
-	return gameObject;
-}
-
-void Component::Update() {}
-
 std::unordered_set<Component*> ComponentSystem::components;
 std::unordered_map<const char*, Component*(*)()> ComponentSystem::reflection;
 

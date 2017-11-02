@@ -1,27 +1,9 @@
 #pragma once
 
-#include "Export.h"
+#include "Component.h"
 
 #include <unordered_set>
 #include <unordered_map>
-
-class GameObject;
-
-class Component {
-	friend class ComponentSystem;
-
-private:
-	GameObject* gameObject;
-
-public:
-	bool enabled;
-
-protected:
-	OPENGL_ENGINE_API virtual void Update();
-
-public:
-	GameObject* GetGameObject();
-};
 
 class ComponentSystem {
 private:

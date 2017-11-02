@@ -7,6 +7,13 @@ Window::Window(const char* title, int width, int height, bool fullscreen) {
 	Init();
 }
 
+Window::~Window() {
+	if (window) {
+		glfwDestroyWindow(window);
+		window = nullptr;
+	}
+}
+
 bool Window::Init() {
 	window = glfwCreateWindow(width, height, title, fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 	if (!window) {

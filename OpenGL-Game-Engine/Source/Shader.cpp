@@ -77,6 +77,10 @@ void Shader::SetUniform1f(const char* name, const float& value) {
 	GLint floatID = glGetUniformLocation(shaderProgram, name);
 	glUniform1f(floatID, value);
 }
+void Shader::SetUniform2f(const char* name, const glm::vec2& vector) {
+	GLint vectorID = glGetUniformLocation(shaderProgram, name);
+	glUniform2f(vectorID, vector.x, vector.y);
+}
 void Shader::SetUniform1i(const char* name, const int& value) {
 	GLint intID = glGetUniformLocation(shaderProgram, name);
 	glUniform1i(intID, value);

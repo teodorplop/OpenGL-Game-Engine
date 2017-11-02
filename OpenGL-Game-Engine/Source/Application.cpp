@@ -3,6 +3,8 @@
 #include <iostream>
 #include <include/gl.h>
 
+#include "Utils\RegisterDLLComponents.h"
+
 #include "Input.h"
 #include "Time.h"
 #include "ComponentSystem.h"
@@ -11,13 +13,20 @@
 
 Application::Application(const char* windowName, int width, int height, bool fullscreen) {
 	if (!glfwInit()) {
-		fprintf(stderr, "Failed to initialize glfw.");
+		fprintf(stderr, "Failed to initialize glfw. Quit...");
 		Sleep(2000);
 		exit(1);
 	}
 
 	this->window = new Window(windowName, width, height, fullscreen);
 	this->desiredDeltaTime = 1.0f / 60.0f;
+
+	if (!this->window->GetGLFWWindow()) {
+		fprintf(stderr, "Quit...");
+		Sleep(2000);
+		Quit();
+		exit(1);
+	}
 
 	GLenum err = glewInit();
 	if (GLEW_OK != err) {
@@ -26,12 +35,7 @@ Application::Application(const char* windowName, int width, int height, bool ful
 		exit(1);
 	}
 
-	Run();
-}
-
-Application::~Application() {
-	delete window;
-	glfwTerminate();
+	RegisterDLLComponents::Register();
 }
 
 void Application::Run() {
@@ -60,4 +64,12 @@ void Application::Run() {
 		window->PollEvents();
 		window->SwapBuffers();
 	}
+}
+
+void Application::Quit() {
+	if (window) {
+		delete window;
+		window = nullptr;
+	}
+	glfwTerminate();
 }

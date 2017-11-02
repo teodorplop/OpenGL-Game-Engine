@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Export.h"
+
 class Time {
 private:
 	static float lastFrameTime;
@@ -8,6 +10,6 @@ private:
 public:
 	static void Update(float time);
 
-	static float RealtimeSinceStartup();
-	static float DeltaTime();
+	OPENGL_ENGINE_API static float RealtimeSinceStartup();
+	OPENGL_ENGINE_API static float DeltaTime();
 };

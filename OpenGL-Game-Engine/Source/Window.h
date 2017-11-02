@@ -14,6 +14,7 @@ private:
 
 public:
 	Window(const char* title, int width, int height, bool fullscreen);
+	~Window();
 	void SetResolution(int width, int height);
 
 	// Returns true if we received a close window action

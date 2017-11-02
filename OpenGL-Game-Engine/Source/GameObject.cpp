@@ -3,6 +3,14 @@
 #include <typeinfo>
 #include <iostream>
 
+GameObject* GameObject::Create() {
+	return new GameObject();
+}
+
+void GameObject::Destroy(GameObject* obj) {
+	delete obj;
+}
+
 GameObject::GameObject() {
 }
 
@@ -20,7 +28,7 @@ Component* GameObject::AddComponent(const char* name) {
 	return comp;
 }
 
-Component* GameObject::GetComponent(const char* name) {
+Component* GameObject::GetComponent(const char* name) const {
 	int idx = 0;
 	while (idx < components.size() && typeid(components[idx]).name() != name)
 		++idx;
@@ -39,7 +47,7 @@ void GameObject::RemoveComponent(Component* component) {
 	}
 }
 
-bool GameObject::IsActive() {
+bool GameObject::IsActive() const {
 	return active;
 }
 
@@ -68,10 +76,10 @@ void GameObject::SetParent(GameObject* parent) {
 		this->parent->AddChild(this);
 }
 
-GameObject* GameObject::GetParent() {
+GameObject* GameObject::GetParent() const {
 	return parent;
 }
 
-std::vector<GameObject*> GameObject::GetChildren() {
+std::vector<GameObject*> GameObject::GetChildren() const {
 	return children;
 }

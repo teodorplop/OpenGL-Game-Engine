@@ -13,9 +13,14 @@ int main() {
 	ComponentSystem::Register("TestComponent", []() -> Component* { return new TestComponent(); });
 
 	GameObject* go = new GameObject();
-	go->AddComponent("TestComponent");
+	//GameObject* go = GameObject::Create();
+	//go->AddComponent("TestComponent");
 
 	Application* app = new Application("ExampleGame", 1024, 768, false);
+
+	app->Run();
+
+	app->Quit();
 
 	return 0;
 }

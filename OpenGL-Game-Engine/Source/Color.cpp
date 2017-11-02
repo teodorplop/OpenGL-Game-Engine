@@ -1,13 +1,15 @@
 #include "Color.h"
 
 Color Color::black = Color(0, 0, 0);
-Color Color::gray = Color(127, 127, 127);
-Color Color::white = Color(255, 255, 255);
-Color Color::red = Color(255, 0, 0);
-Color Color::green = Color(0, 255, 0);
-Color Color::blue = Color(0, 0, 255);
-Color Color::yellow = Color(255, 235, 4);
+Color Color::gray = Color(0.5, 0.5, 0.5);
+Color Color::white = Color(1, 1, 1);
+Color Color::red = Color(1, 0, 0);
+Color Color::green = Color(0, 1, 0);
+Color Color::blue = Color(0, 0, 1);
+Color Color::yellow = Color(1, 0.92f, 0.016f);
 
-Color::Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+Color::Color() {}
+
+Color::Color(float r, float g, float b, float a) {
 	this->r = r, this->g = g, this->b = b, this->a = a;
 }
