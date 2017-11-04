@@ -52,6 +52,8 @@ void Application::Run() {
 		if (time - lastFrameTime < desiredDeltaTime)
 			continue;
 
+		window->PollEvents();
+
 		// First update the time
 		Time::Update(time);
 
@@ -64,7 +66,6 @@ void Application::Run() {
 		// Input needs to know when the frame ends, in order to clear its stuff
 		Input::EndOfFrame();
 
-		window->PollEvents();
 		window->SwapBuffers();
 	}
 }

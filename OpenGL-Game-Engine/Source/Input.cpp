@@ -32,25 +32,37 @@ void Input::Handle(Window* window) {
 	GLFWwindow *glWindow = window->GetGLFWWindow();
 
 	// Make sure we clear input when changing windows
-	EndOfFrame();
+	ClearInput();
 
 	glfwSetScrollCallback(glWindow, ScrollCallback);
 	glfwSetCursorPosCallback(glWindow, CursorPositionCallback);
 	glfwSetMouseButtonCallback(glWindow, MouseButtonCallback);
 	glfwSetKeyCallback(glWindow, KeyCallback);
 }
-void Input::EndOfFrame() {
-	// We are safe to clear there at the end of a frame.
+void Input::ClearInput() {
 	scroll = 0.0f;
-	for (int i = 0; i < keysCount; ++i) {
-		keysDown[i] = keysUp[i] = false;
-	}
-	for (int i = 0; i < mouseButtonsCount; ++i) {
-		mouseButtonsDown[i] = mouseButtonsUp[i] = false;
-	}
+
+	memset(keysDown, false, keysCount);
+	memset(keys, false, keysCount);
+	memset(keysUp, false, keysCount);
+
+	memset(mouseButtonsDown, false, mouseButtonsCount);
+	memset(mouseButtons, false, mouseButtonsCount);
+	memset(mouseButtonsUp, false, mouseButtonsCount);
+}
+void Input::EndOfFrame() {
+	scroll = 0.0f;
+
+	memset(keysDown, false, keysCount);
+	memset(keysUp, false, keysCount);
+
+	memset(mouseButtonsDown, false, mouseButtonsCount);
+	memset(mouseButtonsUp, false, mouseButtonsCount);
 }
 
 void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	//printf("%d %d\n", key, action);
+
 	if (action == 0 && keys[key]) {
 		keys[key] = keysDown[key] = false;
 		keysUp[key] = true;
@@ -58,6 +70,8 @@ void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
 	else if (action == 1) {
 		keys[key] = keysDown[key] = true;
 	}
+
+	//printf("%d\n", keys[key]);
 }
 bool Input::GetKeyDown(int key) {
 	return keysDown[key];

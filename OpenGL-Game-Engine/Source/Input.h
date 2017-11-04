@@ -26,6 +26,8 @@ private:
 	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+	static void ClearInput();
+
 public:
 	// Sets the window we want to handle input for
 	static void Handle(Window* window);

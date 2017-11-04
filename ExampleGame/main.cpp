@@ -4,18 +4,13 @@
 #include <iostream>
 #include <vector>
 
+#include "Assets\Scripts\CameraController.h"
+
 using namespace glm;
 using namespace std;
 
-class TestComponent : public Component {
-protected:
-	void Update() {
-		printf("TestComponent Update");
-	}
-};
-
 void RegisterGameComponents() {
-	ComponentSystem::Register("TestComponent", []() -> Component* { return new TestComponent(); });
+	ComponentSystem::Register("CameraController", []() -> Component* { return new CameraController(); });
 }
 
 Mesh* CreateMesh() {
@@ -32,6 +27,15 @@ Mesh* CreateMesh() {
 	vertices.push_back(vec3(0.5, 0.5, 0));
 	vertices.push_back(vec3(-0.5, 0.5, 0));
 
+	vertices.push_back(vec3(-0.5, -0.5, 1));
+	vertices.push_back(vec3(0.5, -0.5, 1));
+	vertices.push_back(vec3(0.5, 0.5, 1));
+	vertices.push_back(vec3(-0.5, 0.5, 1));
+
+	normals.push_back(vec3(0, 0, 0));
+	normals.push_back(vec3(0, 0, 0));
+	normals.push_back(vec3(0, 0, 0));
+	normals.push_back(vec3(0, 0, 0));
 	normals.push_back(vec3(0, 0, 0));
 	normals.push_back(vec3(0, 0, 0));
 	normals.push_back(vec3(0, 0, 0));
@@ -41,7 +45,15 @@ Mesh* CreateMesh() {
 	colors.push_back(Color::green);
 	colors.push_back(Color::blue);
 	colors.push_back(Color::yellow);
+	colors.push_back(Color::red);
+	colors.push_back(Color::green);
+	colors.push_back(Color::blue);
+	colors.push_back(Color::yellow);
 
+	uvs.push_back(vec2(0, 0));
+	uvs.push_back(vec2(0, 0));
+	uvs.push_back(vec2(0, 0));
+	uvs.push_back(vec2(0, 0));
 	uvs.push_back(vec2(0, 0));
 	uvs.push_back(vec2(0, 0));
 	uvs.push_back(vec2(0, 0));
@@ -54,6 +66,14 @@ Mesh* CreateMesh() {
 	indices.push_back(0);
 	indices.push_back(2);
 	indices.push_back(3);
+
+	indices.push_back(4);
+	indices.push_back(5);
+	indices.push_back(6);
+
+	indices.push_back(4);
+	indices.push_back(6);
+	indices.push_back(7);
 
 	mesh->SetVertices(vertices);
 	mesh->SetColors(colors);
@@ -78,7 +98,8 @@ void CreateRandomObj() {
 	camera->SetFarClip(10);
 	camera->SetNearClip(0.1f);
 	camera->SetFieldOfView(50);
-	camera->GetGameObject()->GetTransform()->SetPosition(vec3(1, 0, -7));
+	camera->GetGameObject()->GetTransform()->SetPosition(vec3(0, 0, -7));
+	cameraGO->AddComponent("CameraController");
 
 	MeshRenderer* mr = (MeshRenderer*)go->AddComponent("MeshRenderer");
 	mr->SetMesh(mesh);
