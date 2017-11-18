@@ -70,7 +70,13 @@ void Transform::RotateBy(glm::vec3 rot) {
 	rot.y = glm::radians(rot.y);
 	rot.z = glm::radians(rot.z);
 
-	SetRotation(rotation + rot);
+	rotation += rot;
+	rotation.x = fmod(rotation.x, glm::two_pi<float>());
+	rotation.y = fmod(rotation.y, glm::two_pi<float>());
+	rotation.z = fmod(rotation.z, glm::two_pi<float>());
+
+	RecomputeDirections();
+	isDirty = true;
 }
 
 void Transform::RecomputeDirections() {

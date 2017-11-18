@@ -14,4 +14,8 @@ void CameraController::Update() {
 		translate.x += 1.0f;
 
 	GetGameObject()->GetTransform()->TranslateBy(translate * Time::DeltaTime());
+
+	printf("before: %f\n", GetGameObject()->GetTransform()->GetRotation().y);
+	GetGameObject()->GetTransform()->RotateBy(glm::vec3(0, 30, 0) * Time::DeltaTime());
+	printf("after: %f\n", GetGameObject()->GetTransform()->GetRotation().y);
 }
