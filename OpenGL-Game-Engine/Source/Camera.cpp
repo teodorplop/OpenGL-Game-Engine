@@ -39,7 +39,7 @@ void Camera::Render() {
 	for (auto camera : cameras) {
 		clearColor = camera->clearColor;
 
-		view = camera->GetGameObject()->GetTransform()->GetModelMatrix();
+		view = camera->GetViewMatrix();
 		proj = camera->GetProjectionMatrix();
 
 		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
@@ -93,7 +93,14 @@ void Camera::SetFieldOfView(float fov) {
 }
 
 mat4 Camera::GetProjectionMatrix() {
-	if (isDirty)
+	if (isDirty) {
 		projectionMatrix = glm::perspective(fieldOfView, aspectRatio, nearClip, farClip);
+		isDirty = false;
+	}
 	return projectionMatrix;
+}
+
+mat4 Camera::GetViewMatrix() {
+	Transform* transform = GetGameObject()->GetTransform();
+	return lookAt(transform->GetPosition(), transform->GetPosition() + transform->GetForward(), transform->GetUp());
 }

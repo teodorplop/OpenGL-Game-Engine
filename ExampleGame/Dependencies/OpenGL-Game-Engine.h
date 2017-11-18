@@ -161,6 +161,9 @@ public:
 	OPENGL_ENGINE_API glm::vec3 GetPosition();
 	OPENGL_ENGINE_API glm::vec3 GetRotation();
 	OPENGL_ENGINE_API glm::vec3 GetScale();
+	OPENGL_ENGINE_API glm::vec3 GetForward();
+	OPENGL_ENGINE_API glm::vec3 GetRight();
+	OPENGL_ENGINE_API glm::vec3 GetUp();
 
 	OPENGL_ENGINE_API void SetPosition(glm::vec3 pos);
 	OPENGL_ENGINE_API void SetRotation(glm::vec3 rot);

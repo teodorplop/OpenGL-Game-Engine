@@ -29,6 +29,7 @@ public:
 	static void Render();
 
 	glm::mat4 GetProjectionMatrix();
+	glm::mat4 GetViewMatrix();
 
 	OPENGL_ENGINE_API void SetClearColor(Color color);
 

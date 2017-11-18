@@ -60,20 +60,20 @@ Mesh* CreateMesh() {
 	uvs.push_back(vec2(0, 0));
 
 	indices.push_back(0);
-	indices.push_back(1);
 	indices.push_back(2);
+	indices.push_back(1);
 
 	indices.push_back(0);
-	indices.push_back(2);
 	indices.push_back(3);
+	indices.push_back(2);
 
 	indices.push_back(4);
+	indices.push_back(6);
 	indices.push_back(5);
-	indices.push_back(6);
 
 	indices.push_back(4);
-	indices.push_back(6);
 	indices.push_back(7);
+	indices.push_back(6);
 
 	mesh->SetVertices(vertices);
 	mesh->SetColors(colors);
@@ -90,15 +90,16 @@ void CreateRandomObj() {
 	Mesh* mesh = CreateMesh();
 
 	GameObject* go = GameObject::Create();
+	//go->GetTransform()->SetPosition(vec3(0, 0, 0));
 
 	GameObject* cameraGO = GameObject::Create();
 	Camera* camera = (Camera*)cameraGO->AddComponent("Camera");
 	camera->SetClearColor(Color::gray);
 	camera->SetAspectRatio(4 / 3);
-	camera->SetFarClip(10);
 	camera->SetNearClip(0.1f);
+	camera->SetFarClip(100);
 	camera->SetFieldOfView(50);
-	camera->GetGameObject()->GetTransform()->SetPosition(vec3(0, 0, -7));
+	camera->GetGameObject()->GetTransform()->SetPosition(vec3(0, 0, -5));
 	cameraGO->AddComponent("CameraController");
 
 	MeshRenderer* mr = (MeshRenderer*)go->AddComponent("MeshRenderer");
