@@ -61,8 +61,6 @@ void Input::EndOfFrame() {
 }
 
 void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	//printf("%d %d\n", key, action);
-
 	if (action == 0 && keys[key]) {
 		keys[key] = keysDown[key] = false;
 		keysUp[key] = true;
@@ -70,8 +68,6 @@ void Input::KeyCallback(GLFWwindow* window, int key, int scancode, int action, i
 	else if (action == 1) {
 		keys[key] = keysDown[key] = true;
 	}
-
-	//printf("%d\n", keys[key]);
 }
 bool Input::GetKeyDown(int key) {
 	return keysDown[key];
@@ -110,7 +106,7 @@ float Input::GetScrollWheel() {
 }
 
 void Input::CursorPositionCallback(GLFWwindow* window, double x, double y) {
-	mousePosition.x = (float)x, mousePosition.y = (float)y;
+	mousePosition.x = (float)x, mousePosition.y = (float)Input::window->GetHeight() - (float)y;
 }
 glm::vec2 Input::GetMousePosition() {
 	return mousePosition;
