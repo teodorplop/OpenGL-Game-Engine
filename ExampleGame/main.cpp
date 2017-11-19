@@ -99,7 +99,7 @@ void CreateRandomObj() {
 	camera->SetNearClip(0.1f);
 	camera->SetFarClip(100);
 	camera->SetFieldOfView(50);
-	camera->GetGameObject()->GetTransform()->SetPosition(vec3(0, 0, -5));
+	camera->GetGameObject()->GetTransform()->SetLocalPosition(vec3(0, 0, -5));
 	cameraGO->AddComponent("CameraController");
 
 	MeshRenderer* mr = (MeshRenderer*)go->AddComponent("MeshRenderer");
@@ -108,6 +108,23 @@ void CreateRandomObj() {
 }
 
 int main() {
+	/*vec3 position = vec3(0, 0, 0);
+	vec3 rotation = vec3(radians(90.0f), radians(90.0f), radians(0.0f));
+	vec3 scale = vec3(1, 1, 1);
+
+	mat4 rotationMatrix = glm::eulerAngleYXZ(rotation.y, rotation.x, rotation.z);
+	mat4 parentMatrix = glm::translate(position) * rotationMatrix * glm::scale(scale);
+
+	vec3 pos = parentMatrix * vec4(0, 1, 1, 1);
+	std::cout << pos << "\n\n\n";
+
+	quat rotationQ = quat::tquat(rotation);
+	vec3 qAngles = eulerAngles(rotationQ);
+	qAngles.x = degrees(qAngles.x);
+	qAngles.y = degrees(qAngles.y);
+	qAngles.z = degrees(qAngles.z);
+	std::cout << qAngles << "\n\n\n";*/
+
 	Application* app = Application::Create("ExampleGame", 1024, 768, false);
 
 	RegisterGameComponents();

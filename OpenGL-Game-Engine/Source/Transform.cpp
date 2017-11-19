@@ -1,15 +1,20 @@
 #include "Transfom.h"
 
+Transform* Transform::root = new Transform();
+
 Transform::Transform() {
-	position = glm::vec3(0, 0, 0);
-	rotation = glm::vec3(0, 0, 0);
-	scale = glm::vec3(1, 1, 1);
+	if (root == nullptr) {
+		localPosition = position = glm::vec3(0, 0, 0);
+		localRotation = rotation = glm::vec3(0, 0, 0);
+		localScale = scale = glm::vec3(1, 1, 1);
 
-	forward = glm::vec3(0, 0, 1);
-	right = glm::vec3(1, 0, 0);
-	up = glm::vec3(0, 1, 0);
+		forward = glm::vec3(0, 0, 1);
+		right = glm::vec3(1, 0, 0);
+		up = glm::vec3(0, 1, 0);
 
-	modelMatrix = glm::mat4(1);
+		modelMatrix = glm::mat4(1);
+	} else
+		SetParent(root);
 }
 
 glm::vec3 Transform::GetPosition() {
@@ -25,6 +30,21 @@ glm::vec3 Transform::GetRotation() {
 glm::vec3 Transform::GetScale() {
 	return scale;
 }
+
+glm::vec3 Transform::GetLocalPosition() {
+	return localPosition;
+}
+glm::vec3 Transform::GetLocalRotation() {
+	glm::vec3 degrees;
+	degrees.x = glm::degrees(localRotation.x);
+	degrees.y = glm::degrees(localRotation.y);
+	degrees.z = glm::degrees(localRotation.z);
+	return degrees;
+}
+glm::vec3 Transform::GetLocalScale() {
+	return localScale;
+}
+
 glm::vec3 Transform::GetForward() {
 	return forward;
 }
@@ -35,48 +55,40 @@ glm::vec3 Transform::GetUp() {
 	return up;
 }
 
-void Transform::SetPosition(glm::vec3 pos) {
-	this->position = pos;
-	isDirty = true;
+void Transform::SetLocalPosition(glm::vec3 pos) {
+	this->localPosition = pos;
+	RecomputeModelMatrix();
 }
-void Transform::SetRotation(glm::vec3 rot) {
+void Transform::SetLocalRotation(glm::vec3 rot) {
 	rot.x = glm::radians(rot.x);
 	rot.y = glm::radians(rot.y);
 	rot.z = glm::radians(rot.z);
+	localRotation = rot;
+	ClampRotation(localRotation);
 
-	rotation = rot;
-	rotation.x = fmod(rotation.x, glm::two_pi<float>());
-	rotation.y = fmod(rotation.y, glm::two_pi<float>());
-	rotation.z = fmod(rotation.z, glm::two_pi<float>());
-
+	RecomputeModelMatrix();
 	RecomputeDirections();
-	isDirty = true;
 }
-void Transform::SetScale(glm::vec3 scale) {
-	this->scale = scale;
-	isDirty = true;
-}
-
-void Transform::TranslateBy(glm::vec3 distance) {
-	SetPosition(position + distance);
+void Transform::SetLocalScale(glm::vec3 scale) {
+	this->localScale = scale;
+	RecomputeModelMatrix();
 }
 
-void Transform::ScaleBy(glm::vec3 scale) {
-	SetScale(this->scale * scale);
+void Transform::LocalTranslateBy(glm::vec3 distance) {
+	SetLocalPosition(localPosition + distance);
 }
-
-void Transform::RotateBy(glm::vec3 rot) {
+void Transform::LocalScaleBy(glm::vec3 scale) {
+	SetLocalScale(this->localScale * scale);
+}
+void Transform::LocalRotateBy(glm::vec3 rot) {
 	rot.x = glm::radians(rot.x);
 	rot.y = glm::radians(rot.y);
 	rot.z = glm::radians(rot.z);
+	localRotation += rot;
+	ClampRotation(localRotation);
 
-	rotation += rot;
-	rotation.x = fmod(rotation.x, glm::two_pi<float>());
-	rotation.y = fmod(rotation.y, glm::two_pi<float>());
-	rotation.z = fmod(rotation.z, glm::two_pi<float>());
-
+	RecomputeModelMatrix();
 	RecomputeDirections();
-	isDirty = true;
 }
 
 void Transform::RecomputeDirections() {
@@ -85,14 +97,64 @@ void Transform::RecomputeDirections() {
 	up = glm::normalize(glm::cross(right, forward));
 }
 
-glm::mat4 Transform::GetModelMatrix() {
-	if (isDirty) {
-		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1), rotation.x, glm::vec3(1, 0, 0));
-		rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0, 1, 0));
-		rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0, 0, 1));
-		modelMatrix = translate(position) * rotationMatrix * glm::scale(scale);
-		isDirty = false;
+void Transform::RecomputeModelMatrix() {
+	position = localPosition;
+	rotation = localRotation;
+	scale = localScale;
+	if (parent != nullptr) {
+		position = parent->modelMatrix * glm::vec4(position.x, position.y, position.z, 1);
+		rotation = parent->rotation + localRotation;
+		ClampRotation(rotation);
+		scale = parent->scale * localScale;
 	}
 
+	modelMatrix = translate(position) * glm::eulerAngleYXZ(rotation.y, rotation.x, rotation.z) * glm::scale(scale);
+}
+
+glm::mat4 Transform::GetModelMatrix() {
 	return modelMatrix;
+}
+
+Transform* Transform::GetParent() {
+	return parent == root ? nullptr : root;
+}
+
+void Transform::SetParent(Transform* parent) {
+	if (parent == nullptr)
+		parent = root;
+
+	if (this->parent != nullptr)
+		this->parent->RemoveChild(this);
+
+	this->parent = parent;
+	this->parent->AddChild(this);
+	this->localPosition = glm::vec3(0, 0, 0);
+	this->localRotation = glm::vec3(0, 0, 0);
+	this->localScale = glm::vec3(1, 1, 1);
+
+	RecomputeModelMatrix();
+	RecomputeDirections();
+}
+
+std::vector<Transform*> Transform::GetChildren() {
+	return children;
+}
+
+void Transform::AddChild(Transform* child) {
+	children.push_back(child);
+}
+
+void Transform::RemoveChild(Transform* child) {
+	int idx = 0;
+	while (idx < children.size() && children[idx] != child)
+		++idx;
+
+	if (idx < children.size())
+		children.erase(children.begin() + idx);
+}
+
+void Transform::ClampRotation(glm::vec3& rotation) {
+	rotation.x = fmod(rotation.x, glm::two_pi<float>());
+	rotation.y = fmod(rotation.y, glm::two_pi<float>());
+	rotation.z = fmod(rotation.z, glm::two_pi<float>());
 }

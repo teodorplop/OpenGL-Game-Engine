@@ -159,19 +159,28 @@ public:
 class Transform : public Component {
 public:
 	OPENGL_ENGINE_API glm::vec3 GetPosition();
-	OPENGL_ENGINE_API glm::vec3 GetRotation();
 	OPENGL_ENGINE_API glm::vec3 GetScale();
+	OPENGL_ENGINE_API glm::vec3 GetRotation();
+
+	OPENGL_ENGINE_API glm::vec3 GetLocalPosition();
+	OPENGL_ENGINE_API glm::vec3 GetLocalRotation();
+	OPENGL_ENGINE_API glm::vec3 GetLocalScale();
+
 	OPENGL_ENGINE_API glm::vec3 GetForward();
 	OPENGL_ENGINE_API glm::vec3 GetRight();
 	OPENGL_ENGINE_API glm::vec3 GetUp();
 
-	OPENGL_ENGINE_API void SetPosition(glm::vec3 pos);
-	OPENGL_ENGINE_API void SetRotation(glm::vec3 rot);
-	OPENGL_ENGINE_API void SetScale(glm::vec3 scale);
+	OPENGL_ENGINE_API void SetLocalPosition(glm::vec3 pos);
+	OPENGL_ENGINE_API void SetLocalRotation(glm::vec3 rot);
+	OPENGL_ENGINE_API void SetLocalScale(glm::vec3 scale);
 
-	OPENGL_ENGINE_API void TranslateBy(glm::vec3 distance);
-	OPENGL_ENGINE_API void RotateBy(glm::vec3 rot);
-	OPENGL_ENGINE_API void ScaleBy(glm::vec3 scale);
+	OPENGL_ENGINE_API void LocalTranslateBy(glm::vec3 distance);
+	OPENGL_ENGINE_API void LocalRotateBy(glm::vec3 rot);
+	OPENGL_ENGINE_API void LocalScaleBy(glm::vec3 scale);
+
+	OPENGL_ENGINE_API Transform* GetParent();
+	OPENGL_ENGINE_API void SetParent(Transform* parent);
+	OPENGL_ENGINE_API std::vector<Transform*> GetChildren();
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);
