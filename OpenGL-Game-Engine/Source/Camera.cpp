@@ -94,7 +94,7 @@ void Camera::SetFieldOfView(float fov) {
 
 mat4 Camera::GetProjectionMatrix() {
 	if (isDirty) {
-		projectionMatrix = glm::perspective(fieldOfView, aspectRatio, nearClip, farClip);
+		projectionMatrix = glm::perspective(glm::radians(fieldOfView), aspectRatio, nearClip, farClip);
 		isDirty = false;
 	}
 	return projectionMatrix;
