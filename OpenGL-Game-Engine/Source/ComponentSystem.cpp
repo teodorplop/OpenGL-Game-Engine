@@ -24,7 +24,16 @@ Component* ComponentSystem::CreateComponent(std::string name, GameObject* gameOb
 }
 void ComponentSystem::DestroyComponent(Component* component) {
 	components.erase(component);
+	component->OnDestroy();
 	delete component;
+}
+
+void ComponentSystem::Start() {
+	for (auto component : components)
+		if (!component->start && component->gameObject->IsActive() && component->enabled) {
+			component->Start();
+			component->start = true;
+		}
 }
 
 void ComponentSystem::Update() {

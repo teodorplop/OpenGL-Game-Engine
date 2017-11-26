@@ -4,21 +4,49 @@
 
 using namespace glm;
 
+vec2 CameraController::GetMousePosViewport() {
+	return Input::GetMousePosition() / vec2(Screen::GetWidth(), Screen::GetHeight());
+}
+
+void CameraController::Start() {
+	initialRotation = GetTransform()->GetRotation();
+	initialMouseViewport = GetMousePosViewport();
+
+	moveSpeed = 1.0f;
+	rotationSpeed = vec2(10.0f, 10.0f);
+
+	Screen::EnableCursor(false);
+}
+
 void CameraController::Update() {
-	vec3 translate;
+	PerformRotation();
+	PerformMovement();
+}
+
+void CameraController::PerformRotation() {
+	vec2 delta = GetMousePosViewport() - initialMouseViewport;
+	vec2 rot = vec2(delta.y, delta.x) * rotationSpeed;
+
+	GetTransform()->SetLocalRotation(vec3(-rot.x, 180 - rot.y, 0));
+}
+
+void CameraController::PerformMovement() {
+	float forwardSpeed = 0.0f;
 	if (Input::GetKey('W'))
-		translate.y += 1.0f;
-	if (Input::GetKey('S'))
-		translate.y -= 1.0f;
-	if (Input::GetKey('A'))
-		translate.x -= 1.0f;
+		forwardSpeed = moveSpeed;
+	else if (Input::GetKey('S'))
+		forwardSpeed = -moveSpeed;
+
+	float lateralSpeed = 0.0f;
 	if (Input::GetKey('D'))
-		translate.x += 1.0f;
+		lateralSpeed = moveSpeed;
+	else if (Input::GetKey('A'))
+		lateralSpeed = -moveSpeed;
 
-	GetGameObject()->GetTransform()->LocalTranslateBy(translate * Time::DeltaTime());
+	Transform* transform = GetTransform();
+	vec3 forward = transform->GetForward();
+	forward.y = 0;
 
-	std::cout << Input::GetMousePosition() << "\n";
-	//printf("before: %f\n", GetGameObject()->GetTransform()->GetRotation().y);
-	//GetGameObject()->GetTransform()->LocalRotateBy(glm::vec3(0, 60, 0) * Time::DeltaTime());
-	//printf("after: %f\n", GetGameObject()->GetTransform()->GetRotation().y);
+	transform->LocalTranslateBy(forward * forwardSpeed * Time::DeltaTime());
+	transform->LocalTranslateBy(transform->GetRight() * lateralSpeed * Time::DeltaTime());
 }

@@ -16,5 +16,6 @@ public:
 
 	static Component* CreateComponent(std::string name, GameObject* gameObject);
 	static void DestroyComponent(Component* component);
+	static void Start();
 	static void Update();
 };

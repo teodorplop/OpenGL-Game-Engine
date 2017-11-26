@@ -5,7 +5,7 @@
 #include <include\glm.h>
 #include <vector>
 
-class Transform : public Component {
+class Transform {
 private:
 	glm::vec3 localPosition, localRotation, localScale;
 	glm::vec3 position, rotation, scale;

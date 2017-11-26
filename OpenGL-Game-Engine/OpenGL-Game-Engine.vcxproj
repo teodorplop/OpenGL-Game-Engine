@@ -133,6 +133,7 @@
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshRenderer.cpp" />
+    <ClCompile Include="Source\Screen.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Utils\RegisterDLLComponents.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshRenderer.h" />
+    <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\Transfom.h" />
     <ClInclude Include="Source\Utils\RegisterDLLComponents.h" />
     <ClInclude Include="Source\Shader.h" />

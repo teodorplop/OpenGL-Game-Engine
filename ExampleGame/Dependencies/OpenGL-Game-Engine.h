@@ -19,6 +19,7 @@ class Input;
 class Material;
 class Mesh;
 class MeshRenderer;
+class Screen;
 class Shader;
 class Texture;
 class Texture2D;
@@ -42,11 +43,21 @@ struct Color {
 };
 
 class Component {
-protected:
-	OPENGL_ENGINE_API virtual void Update();
-public:
+private:
+	GameObject* gameObject;
+	bool start;
 	bool enabled;
-	OPENGL_ENGINE_API GameObject* GetGameObject();
+
+protected:
+	OPENGL_ENGINE_API virtual void Start();
+	OPENGL_ENGINE_API virtual void Update();
+	OPENGL_ENGINE_API virtual void OnDestroy();
+
+public:
+	OPENGL_ENGINE_API GameObject* GetGameObject() const;
+	OPENGL_ENGINE_API Transform* GetTransform() const;
+	OPENGL_ENGINE_API void Enable(bool enabled);
+	OPENGL_ENGINE_API bool IsEnabled() const;
 };
 
 class Camera : public Component {
@@ -136,6 +147,14 @@ public:
 	OPENGL_ENGINE_API Material* GetMaterial();
 };
 
+class Screen {
+public:
+	OPENGL_ENGINE_API static int GetWidth();
+	OPENGL_ENGINE_API static int GetHeight();
+	OPENGL_ENGINE_API static void SetResolution(int width, int height);
+	OPENGL_ENGINE_API static void EnableCursor(bool enabled);
+};
+
 class Shader {
 public:
 	OPENGL_ENGINE_API static Shader* Create(const char* vertexFile, const char* fragmentFile);
@@ -156,7 +175,7 @@ public:
 	OPENGL_ENGINE_API static float DeltaTime();
 };
 
-class Transform : public Component {
+class Transform {
 public:
 	OPENGL_ENGINE_API glm::vec3 GetPosition();
 	OPENGL_ENGINE_API glm::vec3 GetScale();

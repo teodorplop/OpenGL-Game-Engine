@@ -6,6 +6,7 @@
 #include "Utils\RegisterDLLComponents.h"
 
 #include "Input.h"
+#include "Screen.h"
 #include "Time.h"
 #include "ComponentSystem.h"
 #include "Camera.h"
@@ -43,6 +44,7 @@ Application::Application(const char* windowName, int width, int height, bool ful
 
 void Application::Run() {
 	Input::Handle(window);
+	Screen::Handle(window);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -60,6 +62,7 @@ void Application::Run() {
 		Time::Update(time);
 
 		// Then we update each registered object
+		ComponentSystem::Start();
 		ComponentSystem::Update();
 
 		// Render all cameras

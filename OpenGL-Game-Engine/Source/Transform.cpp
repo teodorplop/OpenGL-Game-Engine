@@ -1,5 +1,7 @@
 #include "Transfom.h"
 
+#include <iostream>
+
 Transform* Transform::root = new Transform();
 
 Transform::Transform() {
