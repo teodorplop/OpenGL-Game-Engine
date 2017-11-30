@@ -16,7 +16,9 @@ class GameObject {
 	~GameObject();
 
 public:
-	OPENGL_ENGINE_API static GameObject* Create();
+	std::string name;
+
+	OPENGL_ENGINE_API static GameObject* Create(const std::string& name);
 	OPENGL_ENGINE_API static void Destroy(GameObject* obj);
 
 	OPENGL_ENGINE_API Transform* GetTransform() const;

@@ -13,8 +13,9 @@ private:
 
 public:
 	OPENGL_ENGINE_API static void Register(std::string name, Component* (create()));
-
 	static Component* CreateComponent(std::string name, GameObject* gameObject);
+	static void DeserializeComponent(Component* comp, const std::string& serializedState);
+
 	static void DestroyComponent(Component* component);
 	static void Start();
 	static void Update();

@@ -16,6 +16,8 @@ void Component::Update() {}
 
 void Component::OnDestroy() {}
 
+void Component::Deserialize(const std::string& serializedState) {}
+
 void Component::Enable(bool enabled) {
 	this->enabled = enabled;
 }

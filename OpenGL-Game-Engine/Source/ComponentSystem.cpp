@@ -12,7 +12,7 @@ void ComponentSystem::Register(std::string name, Component* (create())) {
 Component* ComponentSystem::CreateComponent(std::string name, GameObject* gameObject) {
 	auto it = reflection.find(name);
 	if (it == reflection.end()) {
-		std::cout << "Component" << name << " not registered.";
+		std::cout << "Component " << name << " not registered.";
 		return nullptr;
 	}
 
@@ -21,6 +21,9 @@ Component* ComponentSystem::CreateComponent(std::string name, GameObject* gameOb
 	component->enabled = true;
 	components.insert(component);
 	return component;
+}
+void ComponentSystem::DeserializeComponent(Component* component, const std::string& serializedState) {
+	component->Deserialize(serializedState);
 }
 void ComponentSystem::DestroyComponent(Component* component) {
 	components.erase(component);

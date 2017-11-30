@@ -18,3 +18,16 @@ std::ostream& operator<<(std::ostream& out, const Color& color) {
 	out << "Color(" << color.r << ", " << color.g << ", " << color.b << ")\n";
 	return out;
 }
+
+bool Color_fromString(const std::string& str, Color& c) {
+	int p = (int)str.find("Color");
+	if (p == std::string::npos) return false;
+
+	std::string content = str.substr(p + 6);
+	std::string::size_type sz;
+	c.r = std::stof(content, &sz);
+	c.g = std::stof(content = content.substr(sz + 1), &sz);
+	c.b = std::stof(content = content.substr(sz + 1), &sz);
+	c.a = std::stof(content);
+	return true;
+}

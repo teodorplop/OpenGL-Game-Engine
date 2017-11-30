@@ -19,4 +19,5 @@ private:
 protected:
 	void Start();
 	void Update();
+	void Deserialize(const std::string& serializedState);
 };

@@ -2,6 +2,7 @@
 
 #include "Export.h"
 #include <iostream>
+#include <string>
 
 struct Color {
 	OPENGL_ENGINE_API static Color black, gray, white, red, green, blue, yellow;
@@ -13,3 +14,4 @@ struct Color {
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);
+OPENGL_ENGINE_API bool Color_fromString(const std::string& str, Color& color);

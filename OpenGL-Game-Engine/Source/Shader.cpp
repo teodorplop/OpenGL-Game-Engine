@@ -2,6 +2,7 @@
 #include "Utils/FileIO.h"
 
 #include <include\gl.h>
+using namespace std;
 
 Shader* Shader::Create(const char* vertexFile, const char* fragmentFile) {
 	return new Shader(vertexFile, fragmentFile);

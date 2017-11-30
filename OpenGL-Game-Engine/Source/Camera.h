@@ -20,6 +20,9 @@ private:
 
 	bool isDirty;
 
+protected:
+	OPENGL_ENGINE_API void Deserialize(const std::string& serializedState);
+
 public:
 	Camera();
 	~Camera();

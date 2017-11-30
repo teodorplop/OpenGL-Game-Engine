@@ -3,9 +3,16 @@
 #include <iostream>
 
 using namespace glm;
+using namespace std;
 
 vec2 CameraController::GetMousePosViewport() {
 	return Input::GetMousePosition() / vec2(Screen::GetWidth(), Screen::GetHeight());
+}
+
+void CameraController::Deserialize(const string& serializedState) {
+	std::string::size_type sz;
+	moveSpeed = std::stof(serializedState, &sz);
+	vec2_fromString(serializedState.substr(sz + 1), rotationSpeed);
 }
 
 void CameraController::Start() {

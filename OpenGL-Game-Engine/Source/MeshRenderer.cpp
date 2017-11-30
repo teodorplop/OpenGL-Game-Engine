@@ -25,3 +25,7 @@ Mesh* MeshRenderer::GetMesh() {
 Material* MeshRenderer::GetMaterial() {
 	return mat;
 }
+
+void MeshRenderer::Deserialize(const std::string& serializedState) {
+
+}

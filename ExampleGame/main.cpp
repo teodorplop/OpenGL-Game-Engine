@@ -89,15 +89,14 @@ void CreateRandomObj() {
 
 	Mesh* mesh = CreateMesh();
 
-	GameObject* parent = GameObject::Create();
+	GameObject* parent = GameObject::Create("ParentObj");
 	parent->GetTransform()->SetLocalScale(vec3(0.5f, 0.5f, 1.0f));
 	parent->GetTransform()->SetLocalPosition(vec3(0, 0, 0));
 
-	GameObject* go = GameObject::Create();
+	GameObject* go = GameObject::Create("Mesh");
 	go->GetTransform()->SetParent(parent->GetTransform());
-	//go->GetTransform()->SetLocalPosition(vec3(0, 0, 0));
 
-	GameObject* cameraGO = GameObject::Create();
+	GameObject* cameraGO = GameObject::Create("Camera");
 	Camera* camera = (Camera*)cameraGO->AddComponent("Camera");
 	camera->SetClearColor(Color::gray);
 	camera->SetAspectRatio(4.0f / 3.0f);
@@ -118,7 +117,9 @@ int main() {
 
 	RegisterGameComponents();
 
-	CreateRandomObj();
+	Scene::Load("Assets/Scenes/Test.scene");
+
+	//CreateRandomObj();
 
 	app->Run();
 

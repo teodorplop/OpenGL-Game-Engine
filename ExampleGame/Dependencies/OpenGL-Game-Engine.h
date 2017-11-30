@@ -19,6 +19,7 @@ class Input;
 class Material;
 class Mesh;
 class MeshRenderer;
+class Scene;
 class Screen;
 class Shader;
 class Texture;
@@ -52,6 +53,7 @@ protected:
 	OPENGL_ENGINE_API virtual void Start();
 	OPENGL_ENGINE_API virtual void Update();
 	OPENGL_ENGINE_API virtual void OnDestroy();
+	OPENGL_ENGINE_API virtual void Deserialize(const std::string& serializedState);
 
 public:
 	OPENGL_ENGINE_API GameObject* GetGameObject() const;
@@ -61,6 +63,9 @@ public:
 };
 
 class Camera : public Component {
+protected:
+	OPENGL_ENGINE_API void Deserialize(const std::string& serializedState);
+
 public:
 	OPENGL_ENGINE_API void SetClearColor(Color color);
 
@@ -83,8 +88,15 @@ public:
 };
 
 class GameObject {
+	Transform* transform;
+	std::vector<Component*> components;
+
+	bool active;
+
 public:
-	OPENGL_ENGINE_API static GameObject* Create();
+	std::string name;
+
+	OPENGL_ENGINE_API static GameObject* Create(const std::string& name);
 	OPENGL_ENGINE_API static void Destroy(GameObject* obj);
 
 	OPENGL_ENGINE_API Transform* GetTransform() const;
@@ -140,11 +152,19 @@ public:
 };
 
 class MeshRenderer : public Component {
+protected:
+	OPENGL_ENGINE_API void Deserialize(const std::string& serializedState);
+
 public:
 	OPENGL_ENGINE_API void SetMesh(Mesh* mesh);
 	OPENGL_ENGINE_API void SetMaterial(Material* material);
 	OPENGL_ENGINE_API Mesh* GetMesh();
 	OPENGL_ENGINE_API Material* GetMaterial();
+};
+
+class Scene {
+public:
+	OPENGL_ENGINE_API static void Load(const char* filename);
 };
 
 class Screen {
@@ -203,3 +223,4 @@ public:
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);
+OPENGL_ENGINE_API bool Color_fromString(const std::string& str, Color& color);

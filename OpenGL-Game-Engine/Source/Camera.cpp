@@ -24,6 +24,18 @@ Camera::~Camera() {
 		cameras.erase(cameras.begin() + idx);
 }
 
+void Camera::Deserialize(const string& serializedState) {
+	std::string::size_type sz;
+	SetAspectRatio(std::stof(serializedState, &sz));
+	SetNearClip(std::stof(serializedState.substr(sz + 1), &sz));
+	SetFarClip(std::stof(serializedState.substr(sz + 1), &sz));
+	SetFieldOfView(std::stof(serializedState.substr(sz + 1), &sz));
+	
+	Color col;
+	if (Color_fromString(serializedState.substr(sz + 1), col))
+		SetClearColor(col);
+}
+
 void Camera::Register(MeshRenderer* renderer) {
 	renderers.insert(renderer);
 }
@@ -48,6 +60,9 @@ void Camera::Render() {
 		for (auto renderer : renderers) {
 			mesh = renderer->GetMesh();
 			mat = renderer->GetMaterial();
+
+			if (mesh == nullptr || mat == nullptr)
+				continue;
 
 			model = renderer->GetGameObject()->GetTransform()->GetModelMatrix();
 

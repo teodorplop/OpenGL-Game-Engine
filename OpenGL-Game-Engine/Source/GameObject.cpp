@@ -3,8 +3,10 @@
 #include <typeinfo>
 #include <iostream>
 
-GameObject* GameObject::Create() {
-	return new GameObject();
+GameObject* GameObject::Create(const std::string& name) {
+	GameObject* go = new GameObject();
+	go->name = name;
+	return go;
 }
 
 void GameObject::Destroy(GameObject* obj) {
@@ -17,6 +19,7 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
+	delete transform;
 	for (int i = 0; i < components.size(); ++i)
 		ComponentSystem::DestroyComponent(components[i]);
 	components.clear();

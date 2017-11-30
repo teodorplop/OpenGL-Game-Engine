@@ -1,13 +1,26 @@
 #include "FileIO.h"
 
+using namespace std;
+
 string FileIO::GetFileContents(const char* filePath) {
 	ifstream fileStream(filePath, ios::in);
 	string content = "";
 	if (fileStream.is_open()) {
 		string line = "";
-		while (getline(fileStream, line)) {
+		while (getline(fileStream, line))
 			content += line + "\n";
-		}
+		fileStream.close();
+	}
+	return content;
+}
+
+vector<string> FileIO::GetFileLines(const char* filePath) {
+	ifstream fileStream(filePath, ios::in);
+	vector<string> content;
+	if (fileStream.is_open()) {
+		string line = "";
+		while (getline(fileStream, line))
+			content.push_back(line);
 		fileStream.close();
 	}
 	return content;
