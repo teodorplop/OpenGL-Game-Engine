@@ -10,6 +10,7 @@
 
 #include "GameObject.h"
 #include "ComponentSystem.h"
+#include "Utils\Parser.h"
 
 #include "Utils\XML\pugixml.hpp"
 
@@ -37,21 +38,11 @@ string remove(const string& str, char chr) {
 }
 
 void SetTransform(GameObject* go, pugi::xml_attribute attr) {
-	vector<string> attrArr = split(attr.value(), ' ');
-
-	glm::vec3 v3 = glm::vec3();
-	if (vec3_fromString(attrArr[0], v3))
-		go->GetTransform()->SetLocalPosition(v3);
-	else
-		cout << go->name << " localPosition deserialization failed.";
-	if (vec3_fromString(attrArr[1], v3))
-		go->GetTransform()->SetLocalRotation(v3);
-	else
-		cout << go->name << " localRotation deserialization failed.";
-	if (vec3_fromString(attrArr[2], v3))
-		go->GetTransform()->SetLocalScale(v3);
-	else
-		cout << go->name << " localScale deserialization failed.";
+	Parser* parser = Parser::Create(attr.value());
+	go->GetTransform()->SetLocalPosition(parser->NextVec3());
+	go->GetTransform()->SetLocalRotation(parser->NextVec3());
+	go->GetTransform()->SetLocalScale(parser->NextVec3());
+	Parser::Destroy(parser);
 }
 
 void DFS(pugi::xml_node node) {

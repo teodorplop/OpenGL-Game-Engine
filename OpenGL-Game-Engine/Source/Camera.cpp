@@ -2,6 +2,7 @@
 #include "MeshRenderer.h"
 #include "GameObject.h"
 #include "Transfom.h"
+#include "Utils\Parser.h"
 
 #include <include\gl.h>
 
@@ -25,15 +26,15 @@ Camera::~Camera() {
 }
 
 void Camera::Deserialize(const string& serializedState) {
-	std::string::size_type sz;
-	SetAspectRatio(std::stof(serializedState, &sz));
-	SetNearClip(std::stof(serializedState.substr(sz + 1), &sz));
-	SetFarClip(std::stof(serializedState.substr(sz + 1), &sz));
-	SetFieldOfView(std::stof(serializedState.substr(sz + 1), &sz));
-	
-	Color col;
-	if (Color_fromString(serializedState.substr(sz + 1), col))
-		SetClearColor(col);
+	Parser* parser = Parser::Create(serializedState);
+
+	SetAspectRatio(parser->NextFloat());
+	SetNearClip(parser->NextFloat());
+	SetFarClip(parser->NextFloat());
+	SetFieldOfView(parser->NextFloat());
+	SetClearColor(parser->NextColor());
+
+	Parser::Destroy(parser);
 }
 
 void Camera::Register(MeshRenderer* renderer) {

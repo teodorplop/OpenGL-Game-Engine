@@ -14,4 +14,3 @@ struct Color {
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);
-OPENGL_ENGINE_API bool Color_fromString(const std::string& str, Color& color);

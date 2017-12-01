@@ -19,6 +19,7 @@ class Input;
 class Material;
 class Mesh;
 class MeshRenderer;
+class Parser;
 class Scene;
 class Screen;
 class Shader;
@@ -162,6 +163,20 @@ public:
 	OPENGL_ENGINE_API Material* GetMaterial();
 };
 
+class Parser {
+public:
+	OPENGL_ENGINE_API static Parser* Create(const std::string& text);
+	OPENGL_ENGINE_API static void Destroy(Parser* parser);
+
+	OPENGL_ENGINE_API int NextInt();
+	OPENGL_ENGINE_API float NextFloat();
+	OPENGL_ENGINE_API glm::vec2 NextVec2();
+	OPENGL_ENGINE_API glm::vec3 NextVec3();
+	OPENGL_ENGINE_API glm::vec4 NextVec4();
+	OPENGL_ENGINE_API Color NextColor();
+	OPENGL_ENGINE_API std::string NextWord();
+};
+
 class Scene {
 public:
 	OPENGL_ENGINE_API static void Load(const char* filename);
@@ -223,4 +238,3 @@ public:
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);
-OPENGL_ENGINE_API bool Color_fromString(const std::string& str, Color& color);

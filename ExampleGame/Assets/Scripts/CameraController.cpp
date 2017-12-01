@@ -10,9 +10,10 @@ vec2 CameraController::GetMousePosViewport() {
 }
 
 void CameraController::Deserialize(const string& serializedState) {
-	std::string::size_type sz;
-	moveSpeed = std::stof(serializedState, &sz);
-	vec2_fromString(serializedState.substr(sz + 1), rotationSpeed);
+	Parser* parser = Parser::Create(serializedState);
+	moveSpeed = parser->NextFloat();
+	rotationSpeed = parser->NextVec2();
+	Parser::Destroy(parser);
 }
 
 void CameraController::Start() {
