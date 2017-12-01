@@ -107,3 +107,65 @@ string Parser::NextWord() {
 		word += text[idx++];
 	return word;
 }
+
+int Parser::StringToInt(const string& text) {
+	return stoi(text);
+}
+
+float Parser::StringToFloat(const string& text) {
+	return stof(text);
+}
+
+vec2 Parser::StringToVec2(const string& text) {
+	string aux = text;
+	string::size_type idx;
+
+	vec2 v;
+	v.x = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	v.y = stof(aux);
+	return v;
+}
+
+vec3 Parser::StringToVec3(const string& text) {
+	string aux = text;
+	string::size_type idx;
+
+	vec3 v;
+	v.x = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	v.y = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	v.z = stof(aux);
+	return v;
+}
+
+vec4 Parser::StringToVec4(const string& text) {
+	string aux = text;
+	string::size_type idx;
+
+	vec4 v;
+	v.x = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	v.y = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	v.z = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	v.w = stof(aux);
+	return v;
+}
+
+Color Parser::StringToColor(const string& text) {
+	string aux = text;
+	string::size_type idx;
+
+	Color c;
+	c.r = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	c.g = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	c.b = stof(aux, &idx);
+	aux = aux.substr(idx + 1);
+	c.a = stof(aux, &idx);
+	return c;
+}

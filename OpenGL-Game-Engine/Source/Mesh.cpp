@@ -1,12 +1,30 @@
 #include "Mesh.h"
 
-#include <include\gl.h>
+#include "Utils\ObjLoader.h"
 
 using namespace std;
 using namespace glm;
 
-Mesh* Mesh::Create(const char* filename) {
-	return new Mesh();
+const string& Mesh::path = "Assets/Models/";
+
+Mesh* Mesh::Load(const std::string& filename) {
+	string fullPath = path + filename;
+	const char* fullPathCStr = fullPath.c_str();
+
+	vector<vec3> vertices;
+	vector<vec2> uvs;
+	vector<vec3> normals;
+	vector<unsigned int> indices;
+
+	Mesh* mesh = new Mesh();
+	if (ObjLoader::LoadObj(fullPathCStr, vertices, uvs, normals, indices)) {
+		mesh->SetVertices(vertices);
+		mesh->SetUV(uvs);
+		mesh->SetNormals(normals);
+		mesh->SetIndices(indices);
+	}
+
+	return mesh;
 }
 
 Mesh* Mesh::Create() {

@@ -2,19 +2,25 @@
 
 #include "Export.h"
 #include <include\glm.h>
+#include <string>
+#include <unordered_map>
 
 class Shader {
 private:
+	static const std::string&	path;
+	static std::unordered_map<std::string, Shader*> loadedShaders;
+
+	std::string name;
 	unsigned int vertexShader, fragmentShader, shaderProgram;
 	void CompileShaders(const char* vertexSource, const char* fragmentSource);
 	unsigned int Compile(unsigned int type, const char* source);
 
-	Shader(const char* vertexFile, const char* fragmentFile);
+	Shader(const std::string& name, const char* vertexFile, const char* fragmentFile);
 	~Shader();
 
 public:
-	OPENGL_ENGINE_API static Shader* Create(const char* vertexFile, const char* fragmentFile);
-	OPENGL_ENGINE_API static void Destroy(Shader* shader);
+	OPENGL_ENGINE_API static Shader* Load(const std::string& name);
+	OPENGL_ENGINE_API static void Unload(Shader* shader);
 
 	void Bind();
 	void Unbind();

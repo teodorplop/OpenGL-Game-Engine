@@ -7,6 +7,7 @@
 
 class MeshRenderer : public Component {
 	Mesh* mesh;
+	Material* sharedMat;
 	Material* mat;
 
 protected:
@@ -18,6 +19,8 @@ public:
 
 	OPENGL_ENGINE_API void SetMesh(Mesh* mesh);
 	OPENGL_ENGINE_API void SetMaterial(Material* material);
+
 	OPENGL_ENGINE_API Mesh* GetMesh();
 	OPENGL_ENGINE_API Material* GetMaterial();
+	OPENGL_ENGINE_API Material* GetSharedMaterial();
 };

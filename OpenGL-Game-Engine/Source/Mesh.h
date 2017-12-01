@@ -11,6 +11,8 @@
 #include "Color.h"
 
 class Mesh {
+	static const std::string& path;
+
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
 	std::vector<Color> colors;
@@ -31,7 +33,7 @@ public:
 	void Draw();
 
 	OPENGL_ENGINE_API static Mesh* Create();
-	OPENGL_ENGINE_API static Mesh* Create(const char* filename);
+	OPENGL_ENGINE_API static Mesh* Load(const std::string& filename);
 
 	OPENGL_ENGINE_API void SetVertices(std::vector<glm::vec3> vertices);
 	OPENGL_ENGINE_API void SetNormals(std::vector<glm::vec3> normals);

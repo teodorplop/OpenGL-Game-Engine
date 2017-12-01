@@ -22,4 +22,11 @@ public:
 	OPENGL_ENGINE_API glm::vec4 NextVec4();
 	OPENGL_ENGINE_API Color NextColor();
 	OPENGL_ENGINE_API std::string NextWord();
+
+	OPENGL_ENGINE_API static int StringToInt(const std::string& text);
+	OPENGL_ENGINE_API static float StringToFloat(const std::string& text);
+	OPENGL_ENGINE_API static glm::vec2 StringToVec2(const std::string& text);
+	OPENGL_ENGINE_API static glm::vec3 StringToVec3(const std::string& text);
+	OPENGL_ENGINE_API static glm::vec4 StringToVec4(const std::string& text);
+	OPENGL_ENGINE_API static Color StringToColor(const std::string& text);
 };

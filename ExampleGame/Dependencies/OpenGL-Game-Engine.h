@@ -126,8 +126,10 @@ public:
 
 class Material {
 public:
+	OPENGL_ENGINE_API static Material* Load(const std::string& name, bool clone = false);
 	OPENGL_ENGINE_API static Material* Create(Shader* shader);
-	OPENGL_ENGINE_API static void Destroy(Material* material);
+	OPENGL_ENGINE_API static void Destroy(Material* mat);
+	OPENGL_ENGINE_API static Material* Clone(Material* original);
 
 	OPENGL_ENGINE_API void SetInt(const std::string& name, int value);
 	OPENGL_ENGINE_API void SetFloat(const std::string& name, float value);
@@ -140,8 +142,8 @@ public:
 
 class Mesh {
 public:
+	OPENGL_ENGINE_API static Mesh* Load(const std::string& filename);
 	OPENGL_ENGINE_API static Mesh* Create();
-	OPENGL_ENGINE_API static Mesh* Create(const char* filename);
 
 	OPENGL_ENGINE_API void SetVertices(std::vector<glm::vec3> vertices);
 	OPENGL_ENGINE_API void SetNormals(std::vector<glm::vec3> normals);
@@ -161,6 +163,7 @@ public:
 	OPENGL_ENGINE_API void SetMaterial(Material* material);
 	OPENGL_ENGINE_API Mesh* GetMesh();
 	OPENGL_ENGINE_API Material* GetMaterial();
+	OPENGL_ENGINE_API Material* GetSharedMaterial();
 };
 
 class Parser {
@@ -175,6 +178,13 @@ public:
 	OPENGL_ENGINE_API glm::vec4 NextVec4();
 	OPENGL_ENGINE_API Color NextColor();
 	OPENGL_ENGINE_API std::string NextWord();
+
+	OPENGL_ENGINE_API static int StringToInt(const std::string& text);
+	OPENGL_ENGINE_API static float StringToFloat(const std::string& text);
+	OPENGL_ENGINE_API static glm::vec2 StringToVec2(const std::string& text);
+	OPENGL_ENGINE_API static glm::vec3 StringToVec3(const std::string& text);
+	OPENGL_ENGINE_API static glm::vec4 StringToVec4(const std::string& text);
+	OPENGL_ENGINE_API static Color StringToColor(const std::string& text);
 };
 
 class Scene {
@@ -192,13 +202,13 @@ public:
 
 class Shader {
 public:
-	OPENGL_ENGINE_API static Shader* Create(const char* vertexFile, const char* fragmentFile);
-	OPENGL_ENGINE_API static void Destroy(Shader* shader);
+	OPENGL_ENGINE_API static Shader* Load(const std::string& name);
+	OPENGL_ENGINE_API static void Unload(Shader* shader);
 };
 
 class Texture2D {
 public:
-	OPENGL_ENGINE_API static Texture2D* Create(const char* filename);
+	OPENGL_ENGINE_API static Texture2D* Load(const std::string& filename);
 	OPENGL_ENGINE_API static Texture2D* Create(int width, int height);
 	OPENGL_ENGINE_API Color GetPixel(int x, int y);
 	OPENGL_ENGINE_API void SetPixel(int x, int y, Color col);

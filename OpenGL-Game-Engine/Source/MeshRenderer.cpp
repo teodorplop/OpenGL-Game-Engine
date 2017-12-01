@@ -1,6 +1,7 @@
 #include "MeshRenderer.h"
 
 #include "Camera.h"
+#include "Utils\Parser.h"
 
 MeshRenderer::MeshRenderer() {
 	Camera::Register(this);
@@ -15,7 +16,7 @@ void MeshRenderer::SetMesh(Mesh* mesh) {
 }
 
 void MeshRenderer::SetMaterial(Material* mat) {
-	this->mat = mat;
+	this->mat = this->sharedMat = mat;
 }
 
 Mesh* MeshRenderer::GetMesh() {
@@ -23,9 +24,23 @@ Mesh* MeshRenderer::GetMesh() {
 }
 
 Material* MeshRenderer::GetMaterial() {
+	if (mat == sharedMat)
+		mat = Material::Clone(mat);
 	return mat;
 }
 
-void MeshRenderer::Deserialize(const std::string& serializedState) {
+Material* MeshRenderer::GetSharedMaterial() {
+	return sharedMat;
+}
 
+void MeshRenderer::Deserialize(const std::string& serializedState) {
+	Parser* parser = Parser::Create(serializedState);
+
+	std::string model = parser->NextWord();
+	std::string material = parser->NextWord();
+
+	mesh = Mesh::Load(model);
+	mat = sharedMat = Material::Load(material);
+
+	Parser::Destroy(parser);
 }

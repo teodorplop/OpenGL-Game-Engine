@@ -4,8 +4,21 @@
 #include<cstdio>
 #include<include\gl.h>
 
-Texture2D* Texture2D::Create(const char* filename) {
-	return new Texture2D(filename);
+using namespace std;
+
+unordered_map<string, Texture2D*> Texture2D::loadedTextures;
+
+Texture2D* Texture2D::Load(const string& filename) {
+	string fullPath = path + filename;
+	const char* fullPathCStr = fullPath.c_str();
+
+	auto it = loadedTextures.find(filename);
+	if (it == loadedTextures.end()) {
+		Texture2D* texture = new Texture2D(fullPathCStr);
+		loadedTextures.insert({ filename, texture });
+		return texture;
+	}
+	return it->second;
 }
 
 Texture2D* Texture2D::Create(int width, int height) {
@@ -30,9 +43,9 @@ void Texture2D::GenerateGLTexture() {
 	glGenTextures(1, &textureId);
 	Bind();
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, FreeImage_GetBits(pixels));
-	//glGenerateMipmap(GL_TEXTURE_2D);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	Unbind();
 }
 

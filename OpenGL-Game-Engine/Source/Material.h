@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Shader.h"
-#include "Texture.h"
 #include "Color.h"
 
 #include "Export.h"
@@ -9,7 +8,12 @@
 #include <include\glm.h>
 #include <unordered_map>
 
+class Texture;
+
 class Material {
+	static const std::string& path;
+	static std::unordered_map<std::string, Material*> loadedMaterials;
+
 	Shader* shader;
 
 	std::unordered_map<std::string, int> ints;
@@ -21,9 +25,12 @@ class Material {
 	std::unordered_map<std::string, Texture*> textures;
 
 	Material(Shader* shader);
+	Material(const Material& original);
 
 public:
+	OPENGL_ENGINE_API static Material* Load(const std::string& name, bool clone = false);
 	OPENGL_ENGINE_API static Material* Create(Shader* shader);
+	OPENGL_ENGINE_API static Material* Clone(Material* original);
 	OPENGL_ENGINE_API static void Destroy(Material* mat);
 
 	OPENGL_ENGINE_API void SetInt(const std::string& name, int value);

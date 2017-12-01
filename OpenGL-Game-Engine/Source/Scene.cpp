@@ -16,26 +16,7 @@
 
 using namespace std;
 
-template<typename Out> void split(const string &s, char delim, Out result) {
-	stringstream ss(s);
-	string item;
-	while (getline(ss, item, delim))
-		*(result++) = item;
-}
-
-vector<string> split(const string &s, char delim) {
-	vector<string> elems;
-	split(s, delim, back_inserter(elems));
-	return elems;
-}
-
-string remove(const string& str, char chr) {
-	string r = "";
-	for (auto c : str)
-		if (c != chr)
-			r += c;
-	return r;
-}
+const string& Scene::path = "Assets/Scenes/";
 
 void SetTransform(GameObject* go, pugi::xml_attribute attr) {
 	Parser* parser = Parser::Create(attr.value());
@@ -61,11 +42,14 @@ void DFS(pugi::xml_node node) {
 }
 
 void Scene::Load(const char* filename) {
+	string fullPath = path + filename;
+	const char* fullPathCStr = fullPath.c_str();
+
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file(filename);
+	pugi::xml_parse_result result = doc.load_file(fullPathCStr);
 
 	if (!result) {
-		cout << filename << " XML Error: " << result.description() << ' ' << "XML Error Offset: " << result.offset;
+		cout << filename << " Scene XML Error: " << result.description() << ' ' << "XML Error Offset: " << result.offset;
 		return;
 	}
 

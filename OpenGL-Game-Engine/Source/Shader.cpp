@@ -2,13 +2,29 @@
 #include "Utils/FileIO.h"
 
 #include <include\gl.h>
+
 using namespace std;
 
-Shader* Shader::Create(const char* vertexFile, const char* fragmentFile) {
-	return new Shader(vertexFile, fragmentFile);
+unordered_map<string, Shader*> Shader::loadedShaders;
+const string& Shader::path = "Assets/Shaders/";
+
+Shader* Shader::Load(const string& name) {
+	auto it = loadedShaders.find(name);
+	if (it == loadedShaders.end()) {
+		string vertFilePath = path + name + ".vert";
+		string fragFilePath = path + name + ".frag";
+		const char* vertFile = vertFilePath.c_str();
+		const char* fragFile = fragFilePath.c_str();
+
+		Shader* shader = new Shader(name, vertFile, fragFile);
+		loadedShaders.insert({ name, shader });
+		return shader;
+	}
+	return it->second;
 }
 
-void Shader::Destroy(Shader* shader) {
+void Shader::Unload(Shader* shader) {
+	loadedShaders.erase(shader->name);
 	delete shader;
 }
 
@@ -52,7 +68,9 @@ void Shader::CompileShaders(const char* vertexSource, const char* fragmentSource
 	glDeleteShader(fragmentShader);
 }
 
-Shader::Shader(const char* vertexFile, const char* fragmentFile) {
+Shader::Shader(const string& name, const char* vertexFile, const char* fragmentFile) {
+	this->name = name;
+
 	string vertexCode = FileIO::GetFileContents(vertexFile);
 	string fragmentCode = FileIO::GetFileContents(fragmentFile);
 	const char* vertexSource = vertexCode.c_str();

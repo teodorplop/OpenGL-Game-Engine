@@ -12,10 +12,12 @@ layout (location = 2) in vec4 inColor;
 layout (location = 3) in vec2 inUV;
 
 out DATA {
+	vec2 uv;
 	vec4 color;
 } Out;
 
 void main() {
 	gl_Position = proj * view * model * inPosition;
+	Out.uv = inUV;
 	Out.color = inColor;
 }
