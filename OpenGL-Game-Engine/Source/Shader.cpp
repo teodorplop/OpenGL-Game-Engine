@@ -2,10 +2,15 @@
 #include "Utils/FileIO.h"
 
 #include <include\gl.h>
+#include "Light.h"
+
+#include <filesystem>
 
 using namespace std;
 
 unordered_map<string, Shader*> Shader::loadedShaders;
+unordered_map<string, string> Shader::includeShaders;
+const string& Shader::includePath = "Dependencies/Shaders/";
 const string& Shader::path = "Assets/Shaders/";
 
 Shader* Shader::Load(const string& name) {
@@ -73,10 +78,42 @@ Shader::Shader(const string& name, const char* vertexFile, const char* fragmentF
 
 	string vertexCode = FileIO::GetFileContents(vertexFile);
 	string fragmentCode = FileIO::GetFileContents(fragmentFile);
+	IncludeShaders(vertexCode);
+	IncludeShaders(fragmentCode);
 	const char* vertexSource = vertexCode.c_str();
 	const char* fragmentSource = fragmentCode.c_str();
 
 	CompileShaders(vertexSource, fragmentSource);
+}
+
+void Shader::IncludeShaders(string& source) {
+	size_t start = source.find("#include");
+	size_t idx = start;
+	while (idx != string::npos) {
+		while (idx < source.size() && source[idx] != '\"')
+			++idx;
+		++idx;
+
+		string filePath = includePath;
+		while (idx < source.size() && source[idx] != '\"')
+			filePath += source[idx++];
+
+		if (idx >= source.size())
+			return;
+
+		source.erase(start, idx - start + 1);
+
+		auto it = includeShaders.find(filePath);
+		if (it == includeShaders.end()) {
+			string content = FileIO::GetFileContents(filePath.c_str());
+			includeShaders.insert({ filePath, content });
+			source.insert(start, content);
+		} else
+			source.insert(start, it->second);
+
+		start = source.find("#include");
+		idx = start;
+	}
 }
 
 Shader::~Shader() {
@@ -113,4 +150,39 @@ void Shader::SetUniform2f(const char* name, const glm::vec2& vector) {
 void Shader::SetUniform1i(const char* name, const int& value) {
 	GLint intID = glGetUniformLocation(shaderProgram, name);
 	glUniform1i(intID, value);
+}
+void Shader::SetUniformColor(const char* name, const Color& color) {
+	GLint intID = glGetUniformLocation(shaderProgram, name);
+	glUniform4f(intID, color.r, color.g, color.b, color.a);
+}
+
+void Shader::SetGlobal3f(const char* name, const glm::vec3& vector) {
+	for (auto& it : loadedShaders) {
+		it.second->Bind();
+		it.second->SetUniform3f(name, vector);
+		it.second->Unbind();
+	}
+}
+
+void Shader::SetGlobalLights(const char* name, const vector<Light*> lights) {
+	for (auto& it : loadedShaders) {
+		it.second->Bind();
+
+		string str = name;
+		str += "_Length";
+		it.second->SetUniform1i(str.c_str(), (int)lights.size());
+
+		for (int i = 0; i < lights.size(); ++i) {
+			string str = name;
+			str += "[" + to_string(i) + "].";
+
+			string uniform = str + "position";
+			it.second->SetUniform4f(uniform.c_str(), lights[i]->GetPosition());
+
+			uniform = str + "color";
+			it.second->SetUniformColor(uniform.c_str(), lights[i]->GetColor());
+		}
+
+		it.second->Unbind();
+	}
 }

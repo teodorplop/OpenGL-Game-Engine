@@ -1,0 +1,40 @@
+#define MAX_LIGHTS 10
+
+uniform int _LightsLength;
+uniform struct Light {
+	vec4 position;
+	vec4 color;
+} _Lights[MAX_LIGHTS];
+
+uniform float _MaterialShininess;
+
+vec4 ApplyLight(Light light, vec4 surfaceColor, vec3 surfacePos, vec3 surfaceNormal, vec3 surfaceToCamera) {
+	surfaceNormal = normalize(surfaceNormal);
+	surfaceToCamera = normalize(surfaceToCamera);
+
+	vec3 surfaceToLight;
+	float attenuation;
+
+	if (light.position.w == 0.0f) {
+		// Directional light
+		surfaceToLight = normalize(light.position.xyz);
+		attenuation = 1.0f;
+	} else {
+		// Other lights
+	}
+
+	// ambient
+	vec4 ambient = light.color;
+
+	// diffuse
+	float diffuseCoefficient = max(0.0f, dot(surfaceNormal, surfaceToLight));
+	vec4 diffuse = diffuseCoefficient * light.color;
+
+	// specular
+	float specularCoefficient = 0.0f;
+	if (_MaterialShininess > 0.0f && diffuseCoefficient > 0.0f)
+		specularCoefficient = pow(max(0.0f, dot(surfaceToCamera, reflect(-surfaceToLight, surfaceNormal))), _MaterialShininess);
+	vec4 specular = specularCoefficient * light.color;
+
+	return surfaceColor * (ambient + attenuation * (diffuse + specular));
+}

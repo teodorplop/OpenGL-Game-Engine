@@ -2,6 +2,7 @@
 #include "MeshRenderer.h"
 #include "GameObject.h"
 #include "Transfom.h"
+#include "Light.h"
 #include "Utils\Parser.h"
 
 #include <include\gl.h>
@@ -49,6 +50,9 @@ void Camera::Render() {
 	Mesh* mesh;
 	Material* mat;
 
+	const vector<Light*>* const lights = Light::GetLights();
+	Shader::SetGlobalLights("_Lights", *lights);
+	
 	for (auto camera : cameras) {
 		clearColor = camera->clearColor;
 

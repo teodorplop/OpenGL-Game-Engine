@@ -109,9 +109,9 @@ void Material::SetTexture(const string& name, Texture* value) {
 void Material::Prepare(mat4 model, mat4 view, mat4 proj) {
 	shader->Bind();
 
-	shader->SetUniformMatrix4fv("model", model);
-	shader->SetUniformMatrix4fv("view", view);
-	shader->SetUniformMatrix4fv("proj", proj);
+	shader->SetUniformMatrix4fv("_Model", model);
+	shader->SetUniformMatrix4fv("_View", view);
+	shader->SetUniformMatrix4fv("_Proj", proj);
 
 	for (auto& pair : ints)
 		shader->SetUniform1i(pair.first.c_str(), pair.second);
@@ -123,6 +123,8 @@ void Material::Prepare(mat4 model, mat4 view, mat4 proj) {
 		shader->SetUniform3f(pair.first.c_str(), pair.second);
 	for (auto& pair : vec4s)
 		shader->SetUniform4f(pair.first.c_str(), pair.second);
+	for (auto& pair : colors)
+		shader->SetUniformColor(pair.first.c_str(), pair.second);
 
 	int idx = 0;
 	for (auto& pair : textures) {

@@ -4,11 +4,19 @@
 #include <include\glm.h>
 #include <string>
 #include <unordered_map>
+#include <vector>
+
+class Light;
+struct Color;
 
 class Shader {
 private:
 	static const std::string&	path;
+	static const std::string& includePath;
 	static std::unordered_map<std::string, Shader*> loadedShaders;
+	static std::unordered_map<std::string, std::string> includeShaders;
+
+	static void IncludeShaders(std::string& source);
 
 	std::string name;
 	unsigned int vertexShader, fragmentShader, shaderProgram;
@@ -30,5 +38,10 @@ public:
 	void SetUniform2f(const char* name, const glm::vec2& vector);
 	void SetUniform3f(const char* name, const glm::vec3& vector);
 	void SetUniform4f(const char* name, const glm::vec4& vector);
+	void SetUniformColor(const char* name, const Color& color);
 	void SetUniform1i(const char* name, const int& value);
+
+	OPENGL_ENGINE_API static void SetGlobal3f(const char* name, const glm::vec3& vector);
+	// king of ugly but... meh.
+	static void SetGlobalLights(const char* name, const std::vector<Light*> lights);
 };

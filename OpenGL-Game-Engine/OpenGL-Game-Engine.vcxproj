@@ -130,6 +130,7 @@
     <ClCompile Include="Source\ComponentSystem.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshRenderer.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Buffers\Buffer.h" />
     <ClInclude Include="Source\Buffers\IndexBuffer.h" />
     <ClInclude Include="Source\Buffers\VertexArray.h" />

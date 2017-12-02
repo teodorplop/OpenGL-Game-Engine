@@ -1,3 +1,4 @@
 <Shader name="Default">
-  <mainTexture type="Texture2D" value="texture.jpg" />
+  <_MainTexture type="Texture2D" value="texture.jpg" />
+  <_MaterialShininess type="float" value="0" />
 </Shader>

@@ -16,6 +16,7 @@ class Component;
 class ComponentSystem;
 class GameObject;
 class Input;
+class Light;
 class Material;
 class Mesh;
 class MeshRenderer;
@@ -124,6 +125,12 @@ public:
 	OPENGL_ENGINE_API static glm::vec2 GetMousePosition();
 };
 
+class Light {
+public:
+	OPENGL_ENGINE_API void SetDirectional(Color color);
+	OPENGL_ENGINE_API Color GetColor();
+};
+
 class Material {
 public:
 	OPENGL_ENGINE_API static Material* Load(const std::string& name, bool clone = false);
@@ -204,6 +211,8 @@ class Shader {
 public:
 	OPENGL_ENGINE_API static Shader* Load(const std::string& name);
 	OPENGL_ENGINE_API static void Unload(Shader* shader);
+
+	OPENGL_ENGINE_API static void SetGlobal3f(const char* name, const glm::vec3& vector);
 };
 
 class Texture2D {
