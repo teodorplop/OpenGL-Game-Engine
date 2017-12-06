@@ -26,8 +26,11 @@ void SetTransform(GameObject* go, pugi::xml_attribute attr) {
 	Parser::Destroy(parser);
 }
 
-void DFS(pugi::xml_node node) {
+void DFS(pugi::xml_node node, Transform* parent) {
 	GameObject* go = GameObject::Create(node.name());
+	Transform* tr = go->GetTransform();
+	if (parent != nullptr)
+		tr->SetParent(parent);
 
 	auto attributes = node.attributes();
 	auto it = attributes.begin();
@@ -38,7 +41,7 @@ void DFS(pugi::xml_node node) {
 	}
 
 	for (auto& child : node.children())
-		DFS(child);
+		DFS(child, tr);
 }
 
 void Scene::Load(const char* filename) {
@@ -54,5 +57,5 @@ void Scene::Load(const char* filename) {
 	}
 
 	for (auto& root : doc.children())
-		DFS(root);
+		DFS(root, nullptr);
 }
