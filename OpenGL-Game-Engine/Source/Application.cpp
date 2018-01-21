@@ -39,13 +39,12 @@ Application::Application(const char* windowName, int width, int height, bool ful
 		exit(1);
 	}
 
+	Input::Handle(window);
+	Screen::Handle(window);
 	RegisterDLLComponents::Register();
 }
 
 void Application::Run() {
-	Input::Handle(window);
-	Screen::Handle(window);
-
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);

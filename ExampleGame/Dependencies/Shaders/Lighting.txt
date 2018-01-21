@@ -8,6 +8,14 @@ uniform struct Light {
 
 uniform float _MaterialShininess;
 
+vec3 FromLightVector(Light light) {
+	vec3 fromLight;
+	if (light.position.w == 0.0f) // Directional light
+		fromLight = -normalize(light.position.xyz);
+
+	return fromLight;
+}
+
 vec4 ApplyLight(Light light, vec4 surfaceColor, vec3 surfacePos, vec3 surfaceNormal, vec3 surfaceToCamera) {
 	surfaceNormal = normalize(surfaceNormal);
 	surfaceToCamera = normalize(surfaceToCamera);

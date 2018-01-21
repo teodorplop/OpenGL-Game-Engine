@@ -42,7 +42,7 @@ bool ObjLoader::LoadObj(const char* filename, std::vector<glm::vec3>& vertices, 
 				&vertexIndex[2], &uvIndex[2], &normalIndex[2]);
 
 			if (read != 9) {
-				fprintf(stderr, "Could not parse file\n");
+				fprintf(stderr, "Could not parse file %s\n", filename);
 				return false;
 			}
 

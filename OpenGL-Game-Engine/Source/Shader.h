@@ -41,7 +41,9 @@ public:
 	void SetUniformColor(const char* name, const Color& color);
 	void SetUniform1i(const char* name, const int& value);
 
+	OPENGL_ENGINE_API static void SetGlobal1f(const char* name, const float& value);
 	OPENGL_ENGINE_API static void SetGlobal3f(const char* name, const glm::vec3& vector);
+	OPENGL_ENGINE_API static void SetGlobal4f(const char* name, const glm::vec4& vector);
 	// king of ugly but... meh.
 	static void SetGlobalLights(const char* name, const std::vector<Light*> lights);
 };

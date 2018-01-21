@@ -147,6 +147,7 @@
     <ClCompile Include="Source\Utils\FileIO.cpp" />
     <ClCompile Include="Source\Utils\TextureUtils.cpp" />
     <ClCompile Include="Source\Utils\XML\pugixml.cpp" />
+    <ClCompile Include="Source\Water\WaterFrameBuffer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="Source\Utils\TextureUtils.h" />
     <ClInclude Include="Source\Utils\XML\pugiconfig.hpp" />
     <ClInclude Include="Source\Utils\XML\pugixml.hpp" />
+    <ClInclude Include="Source\Water\WaterFrameBuffer.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -39,6 +39,8 @@ Texture2D::Texture2D(int width, int height) {
 	GenerateGLTexture();
 }
 
+Texture2D::Texture2D() {}
+
 void Texture2D::GenerateGLTexture() {
 	glGenTextures(1, &textureId);
 	Bind();
@@ -87,4 +89,32 @@ void Texture2D::Bind(int index) {
 
 void Texture2D::Unbind() {
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Texture* Texture2D::CreateTextureAttachment(int width, int height) {
+	Texture2D* texture = new Texture2D();
+	texture->width = width, texture->height = height;
+
+	glGenTextures(1, &(texture->textureId));
+	glBindTexture(GL_TEXTURE_2D, texture->textureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture->textureId, 0);
+
+	return texture;
+}
+
+Texture* Texture2D::CreateDepthTextureAttachment(int width, int height) {
+	Texture2D* texture = new Texture2D();
+	texture->width = width, texture->height = height;
+
+	glGenTextures(1, &(texture->textureId));
+	glBindTexture(GL_TEXTURE_2D, texture->textureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture->textureId, 0);
+
+	return texture;
 }

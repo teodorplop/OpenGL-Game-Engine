@@ -21,6 +21,7 @@ class Texture2D : public Texture {
 public:
 	Texture2D(const char* filename);
 	Texture2D(int width, int height);
+	Texture2D();
 
 	OPENGL_ENGINE_API static Texture2D* Load(const std::string& filename);
 	OPENGL_ENGINE_API static Texture2D* Create(int width, int height);
@@ -29,4 +30,7 @@ public:
 
 	void Bind(int index = 0);
 	void Unbind();
+
+	static Texture* CreateTextureAttachment(int width, int height);
+	static Texture* CreateDepthTextureAttachment(int width, int height);
 };

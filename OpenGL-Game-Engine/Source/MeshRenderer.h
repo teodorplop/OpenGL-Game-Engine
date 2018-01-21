@@ -9,13 +9,14 @@ class MeshRenderer : public Component {
 	Mesh* mesh;
 	Material* sharedMat;
 	Material* mat;
+	bool rendersWater;
 
 protected:
 	OPENGL_ENGINE_API void Deserialize(const std::string& serializedState);
 
 public:
-	MeshRenderer();
-	~MeshRenderer();
+	MeshRenderer(bool rendersWater = false);
+	virtual ~MeshRenderer();
 
 	OPENGL_ENGINE_API void SetMesh(Mesh* mesh);
 	OPENGL_ENGINE_API void SetMaterial(Material* material);
@@ -23,4 +24,6 @@ public:
 	OPENGL_ENGINE_API Mesh* GetMesh();
 	OPENGL_ENGINE_API Material* GetMaterial();
 	OPENGL_ENGINE_API Material* GetSharedMaterial();
+
+	bool RendersWater();
 };

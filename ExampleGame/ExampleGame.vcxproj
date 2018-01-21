@@ -125,9 +125,12 @@
   <ItemGroup>
     <None Include="Assets\Materials\Dragon.mat" />
     <None Include="Assets\Materials\Default.mat" />
+    <None Include="Assets\Materials\Water.mat" />
     <None Include="Assets\Scenes\Test.scene" />
     <None Include="Assets\Shaders\Default.frag" />
     <None Include="Assets\Shaders\Default.vert" />
+    <None Include="Assets\Shaders\Water.frag" />
+    <None Include="Assets\Shaders\Water.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\Scripts\CameraController.h" />

@@ -36,7 +36,7 @@ Mesh::Mesh() {
 }
 
 void Mesh::GenerateGLMesh() {
-	vertexBuffer = new Buffer(vector<vec3>(1));
+	vertexBuffer = new Buffer(vector<vec4>(1));
 	normalBuffer = new Buffer(vector<vec3>(1));
 	colorBuffer = new Buffer(vector<Color>(1));
 	uvBuffer = new Buffer(vector<vec2>(1));
@@ -51,8 +51,14 @@ void Mesh::GenerateGLMesh() {
 }
 
 void Mesh::SetVertices(vector<vec3> vertices) {
+	this->vertices.clear();
+	for (unsigned int i = 0; i < vertices.size(); ++i)
+		this->vertices.push_back(vec4(vertices[i], 1));
+	vertexBuffer->SetData(this->vertices);
+}
+void Mesh::SetVertices(std::vector<glm::vec4> vertices) {
 	this->vertices = vertices;
-	vertexBuffer->SetData(vertices);
+	vertexBuffer->SetData(this->vertices);
 }
 void Mesh::SetNormals(vector<vec3> normals) {
 	this->normals = normals;

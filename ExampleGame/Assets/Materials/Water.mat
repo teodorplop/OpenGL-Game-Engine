@@ -1,0 +1,8 @@
+<Shader name="Water">
+  <_MoveFactor type="float" value="0.1"/>
+  <_DistorsionStrength type="float" value="3"/>
+  <_SpecularPower type="float" value="1.05"/>
+  <_TextureTiling type="float" value="3"/>
+  <_DUDVSampler type="Texture2D" value="dudv.png"/>
+  <_NormalSampler type="Texture2D" value="normal.png"/>
+</Shader>

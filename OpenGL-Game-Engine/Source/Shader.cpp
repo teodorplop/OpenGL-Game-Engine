@@ -156,10 +156,26 @@ void Shader::SetUniformColor(const char* name, const Color& color) {
 	glUniform4f(intID, color.r, color.g, color.b, color.a);
 }
 
+void Shader::SetGlobal1f(const char* name, const float& value) {
+	for (auto& it : loadedShaders) {
+		it.second->Bind();
+		it.second->SetUniform1f(name, value);
+		it.second->Unbind();
+	}
+}
+
 void Shader::SetGlobal3f(const char* name, const glm::vec3& vector) {
 	for (auto& it : loadedShaders) {
 		it.second->Bind();
 		it.second->SetUniform3f(name, vector);
+		it.second->Unbind();
+	}
+}
+
+void Shader::SetGlobal4f(const char* name, const glm::vec4& vector) {
+	for (auto& it : loadedShaders) {
+		it.second->Bind();
+		it.second->SetUniform4f(name, vector);
 		it.second->Unbind();
 	}
 }

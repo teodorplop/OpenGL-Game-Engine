@@ -28,6 +28,7 @@ class Texture;
 class Texture2D;
 class Time;
 class Transform;
+class WaterRenderer;
 
 class Application {
 public:
@@ -212,7 +213,9 @@ public:
 	OPENGL_ENGINE_API static Shader* Load(const std::string& name);
 	OPENGL_ENGINE_API static void Unload(Shader* shader);
 
+	OPENGL_ENGINE_API static void SetGlobal1f(const char* name, const float& value);
 	OPENGL_ENGINE_API static void SetGlobal3f(const char* name, const glm::vec3& vector);
+	OPENGL_ENGINE_API static void SetGlobal4f(const char* name, const glm::vec4& vector);
 };
 
 class Texture2D {
@@ -254,6 +257,9 @@ public:
 	OPENGL_ENGINE_API Transform* GetParent();
 	OPENGL_ENGINE_API void SetParent(Transform* parent);
 	OPENGL_ENGINE_API std::vector<Transform*> GetChildren();
+};
+
+class WaterRenderer : public MeshRenderer {
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);
