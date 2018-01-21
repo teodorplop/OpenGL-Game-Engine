@@ -8,6 +8,7 @@ class Transform;
 
 class Component {
 	friend class ComponentSystem;
+	friend class CollisionManager;
 
 private:
 	GameObject* gameObject;
@@ -18,6 +19,7 @@ protected:
 	OPENGL_ENGINE_API virtual void Start();
 	OPENGL_ENGINE_API virtual void Update();
 	OPENGL_ENGINE_API virtual void OnDestroy();
+	OPENGL_ENGINE_API virtual void OnCollision(GameObject* other);
 	OPENGL_ENGINE_API virtual void Deserialize(const std::string& serializedState);
 
 public:

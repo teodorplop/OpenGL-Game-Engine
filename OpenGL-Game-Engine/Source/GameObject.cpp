@@ -3,6 +3,8 @@
 #include <typeinfo>
 #include <iostream>
 
+using namespace std;
+
 GameObject* GameObject::Create(const std::string& name) {
 	GameObject* go = new GameObject();
 	go->name = name;
@@ -43,6 +45,10 @@ Component* GameObject::GetComponent(const char* name) const {
 		++idx;
 
 	return idx < components.size() ? components[idx] : nullptr;
+}
+
+vector<Component*> GameObject::GetComponents() const {
+	return components;
 }
 
 void GameObject::RemoveComponent(Component* component) {

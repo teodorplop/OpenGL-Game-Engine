@@ -10,6 +10,7 @@
 #include "Time.h"
 #include "ComponentSystem.h"
 #include "Camera.h"
+#include "Collisions\CollisionManager.h"
 
 Application* Application::Create(const char* windowName, int width, int height, bool fullscreen) {
 	return new Application(windowName, width, height, fullscreen);
@@ -63,6 +64,8 @@ void Application::Run() {
 		// Then we update each registered object
 		ComponentSystem::Start();
 		ComponentSystem::Update();
+
+		CollisionManager::Update();
 
 		// Render all cameras
 		Camera::Render();

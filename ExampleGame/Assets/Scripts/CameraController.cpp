@@ -31,6 +31,10 @@ void CameraController::Update() {
 	PerformMovement();
 }
 
+void CameraController::OnCollision(BoxCollider* other) {
+	std::cout << "Collision.";
+}
+
 void CameraController::PerformRotation() {
 	vec2 delta = GetMousePosViewport() - initialMouseViewport;
 	vec2 rot = vec2(delta.y, delta.x) * rotationSpeed;

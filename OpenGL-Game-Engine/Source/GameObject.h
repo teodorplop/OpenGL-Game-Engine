@@ -25,6 +25,7 @@ public:
 
 	OPENGL_ENGINE_API Component* AddComponent(const char* name);
 	OPENGL_ENGINE_API Component* GetComponent(const char* name) const;
+	OPENGL_ENGINE_API std::vector<Component*> GetComponents() const;
 	OPENGL_ENGINE_API void RemoveComponent(Component* component);
 
 	OPENGL_ENGINE_API bool IsActive() const;

@@ -10,6 +10,7 @@
 #include <vector>
 
 class Application;
+class BoxCollider;
 class Camera;
 struct Color;
 class Component;
@@ -56,6 +57,7 @@ protected:
 	OPENGL_ENGINE_API virtual void Start();
 	OPENGL_ENGINE_API virtual void Update();
 	OPENGL_ENGINE_API virtual void OnDestroy();
+	OPENGL_ENGINE_API virtual void OnCollision(GameObject* other);
 	OPENGL_ENGINE_API virtual void Deserialize(const std::string& serializedState);
 
 public:
@@ -64,6 +66,8 @@ public:
 	OPENGL_ENGINE_API void Enable(bool enabled);
 	OPENGL_ENGINE_API bool IsEnabled() const;
 };
+
+class BoxCollider : public Component {};
 
 class Camera : public Component {
 protected:
@@ -106,6 +110,7 @@ public:
 
 	OPENGL_ENGINE_API Component* AddComponent(const char* name);
 	OPENGL_ENGINE_API Component* GetComponent(const char* name) const;
+	OPENGL_ENGINE_API std::vector<Component*> GetComponents() const;
 	OPENGL_ENGINE_API void RemoveComponent(Component* component);
 
 	OPENGL_ENGINE_API bool IsActive() const;
