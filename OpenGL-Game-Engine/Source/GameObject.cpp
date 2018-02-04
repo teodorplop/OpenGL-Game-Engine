@@ -41,7 +41,7 @@ Component* GameObject::AddComponent(const char* name) {
 
 Component* GameObject::GetComponent(const char* name) const {
 	int idx = 0;
-	while (idx < components.size() && typeid(components[idx]).name() != name)
+	while (idx < components.size() && strcmp(typeid(*components[idx]).name() + 6, name) != 0)
 		++idx;
 
 	return idx < components.size() ? components[idx] : nullptr;

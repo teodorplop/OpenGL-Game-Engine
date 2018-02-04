@@ -5,12 +5,14 @@
 #include <vector>
 
 #include "Assets\Scripts\CameraController.h"
+#include "Assets\Scripts\FunScript.h"
 
 using namespace glm;
 using namespace std;
 
 void RegisterGameComponents() {
 	ComponentSystem::Register("CameraController", []() -> Component* { return new CameraController(); });
+	ComponentSystem::Register("FunScript", []() -> Component* { return new FunScript(); });
 }
 
 int main() {

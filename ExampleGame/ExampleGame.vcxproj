@@ -120,6 +120,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assets\Scripts\CameraController.cpp" />
+    <ClCompile Include="Assets\Scripts\FunScript.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +128,9 @@
     <None Include="Assets\Materials\Default.mat" />
     <None Include="Assets\Materials\Fox.mat" />
     <None Include="Assets\Materials\Water.mat" />
-    <None Include="Assets\Scenes\Test.scene" />
+    <None Include="Assets\Scenes\Test.scene">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Assets\Shaders\Default.frag" />
     <None Include="Assets\Shaders\Default.vert" />
     <None Include="Assets\Shaders\Water.frag" />
@@ -135,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\Scripts\CameraController.h" />
+    <ClInclude Include="Assets\Scripts\FunScript.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dependencies\Shaders\Lighting.txt" />
