@@ -19,6 +19,6 @@ private:
 protected:
 	void Start();
 	void Update();
-	void OnCollision(BoxCollider* other);
+	void OnCollision(GameObject* other);
 	void Deserialize(const std::string& serializedState);
 };

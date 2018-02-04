@@ -31,8 +31,8 @@ void CameraController::Update() {
 	PerformMovement();
 }
 
-void CameraController::OnCollision(BoxCollider* other) {
-	std::cout << "Collision.";
+void CameraController::OnCollision(GameObject* other) {
+	std::cout << "Camera collision with " << other->name << "\n";
 }
 
 void CameraController::PerformRotation() {

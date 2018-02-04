@@ -32,12 +32,13 @@ bool CollisionManager::CheckCollision(BoxCollider* a, BoxCollider* b) {
 	vec3 bCenter = b->GetTransform()->GetPosition() + b->center;
 
 	vec3 aSize = a->GetTransform()->GetScale() * a->size;
-	vec3 bSize = a->GetTransform()->GetScale() * b->size;
+	vec3 bSize = b->GetTransform()->GetScale() * b->size;
 
 	if (abs(aCenter.x - bCenter.x) < aSize.x / 2 + bSize.x / 2 &&
 		abs(aCenter.y - bCenter.y) < aSize.y / 2 + bSize.y / 2 &&
 		abs(aCenter.z - bCenter.z) < aSize.z / 2 + bSize.z / 2)
 		return true;
+	return false;
 }
 
 void CollisionManager::SendCollision(BoxCollider* a, BoxCollider* b) {

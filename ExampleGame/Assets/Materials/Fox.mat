@@ -1,0 +1,4 @@
+<Shader name="Default">
+  <_MainTexture type="Texture2D" value="fox.png" />
+  <_MaterialShininess type="float" value="0" />
+</Shader>
