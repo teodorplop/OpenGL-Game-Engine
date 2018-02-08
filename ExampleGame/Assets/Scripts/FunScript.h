@@ -5,7 +5,6 @@
 class FunScript : public Component {
 private:
 	float moveSpeed;
-	void Rotate();
 
 protected:
 	void Update();

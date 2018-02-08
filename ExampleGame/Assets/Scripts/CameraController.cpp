@@ -58,6 +58,7 @@ void CameraController::PerformMovement() {
 	Transform* transform = GetTransform();
 	vec3 forward = transform->GetForward();
 	forward.y = 0;
+	forward = normalize(forward);
 
 	transform->LocalTranslateBy(forward * forwardSpeed * Time::DeltaTime());
 	transform->LocalTranslateBy(transform->GetRight() * lateralSpeed * Time::DeltaTime());

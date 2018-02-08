@@ -139,6 +139,8 @@
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Screen.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\UI\UICamera.cpp" />
+    <ClCompile Include="Source\UI\UISprite.cpp" />
     <ClCompile Include="Source\Utils\ObjLoader.cpp" />
     <ClCompile Include="Source\Utils\Parser.cpp" />
     <ClCompile Include="Source\Utils\RegisterDLLComponents.cpp" />
@@ -173,6 +175,8 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\Transfom.h" />
+    <ClInclude Include="Source\UI\UICamera.h" />
+    <ClInclude Include="Source\UI\UISprite.h" />
     <ClInclude Include="Source\Utils\ObjLoader.h" />
     <ClInclude Include="Source\Utils\Parser.h" />
     <ClInclude Include="Source\Utils\RegisterDLLComponents.h" />
