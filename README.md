@@ -12,6 +12,6 @@
 * Engine compiled as dll, scripting done with C++
 * Basic collision detection using Cube Colliders
 
-### Implemented features
+### Usage
 
 For details on how should the engine be used, you can check the **ExampleGame**.
