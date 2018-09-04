@@ -11,3 +11,7 @@
 * Component system: GameObject, Transform, Camera, MeshRenderer and custom scripts as well
 * Engine compiled as dll, scripting done with C++
 * Basic collision detection using Cube Colliders
+
+### Implemented features
+
+For details on how should the engine be used, you can check the **ExampleGame**.
