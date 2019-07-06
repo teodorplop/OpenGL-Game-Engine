@@ -29,7 +29,6 @@ class Texture;
 class Texture2D;
 class Time;
 class Transform;
-class WaterRenderer;
 
 class Application {
 public:
@@ -262,9 +261,6 @@ public:
 	OPENGL_ENGINE_API Transform* GetParent();
 	OPENGL_ENGINE_API void SetParent(Transform* parent);
 	OPENGL_ENGINE_API std::vector<Transform*> GetChildren();
-};
-
-class WaterRenderer : public MeshRenderer {
 };
 
 OPENGL_ENGINE_API std::ostream& operator<<(std::ostream& out, const Color& color);

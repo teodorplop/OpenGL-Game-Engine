@@ -3,8 +3,7 @@
 #include "Camera.h"
 #include "Utils\Parser.h"
 
-MeshRenderer::MeshRenderer(bool rendersWater) {
-	this->rendersWater = rendersWater;
+MeshRenderer::MeshRenderer() {
 	Camera::Register(this);
 }
 
@@ -44,8 +43,4 @@ void MeshRenderer::Deserialize(const std::string& serializedState) {
 	mat = sharedMat = Material::Load(material);
 
 	Parser::Destroy(parser);
-}
-
-bool MeshRenderer::RendersWater() {
-	return rendersWater;
 }

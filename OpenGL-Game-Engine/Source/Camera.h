@@ -15,8 +15,6 @@ class Camera : public Component {
 private:
 	static std::vector<Camera*> cameras;
 	static std::unordered_set<MeshRenderer*> renderers;
-	static std::unordered_set<MeshRenderer*> wRenderers;
-	static WaterFrameBuffer* waterFBO;
 
 	Color clearColor;
 	float aspectRatio, nearClip, farClip, fieldOfView;
@@ -34,10 +32,7 @@ public:
 	static void Register(MeshRenderer* renderer);
 	static void Unregister(MeshRenderer* renderer);
 	static void Render();
-	static void RenderReflection();
-	static void RenderRefraction();
 	static void RenderOnce();
-	static void RenderWater();
 
 	glm::mat4 GetProjectionMatrix();
 	glm::mat4 GetViewMatrix();

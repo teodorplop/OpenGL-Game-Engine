@@ -4,7 +4,6 @@
 #include "Transfom.h"
 #include "Light.h"
 #include "Utils\Parser.h"
-#include "Water\WaterFrameBuffer.h"
 #include "Time.h"
 #include <typeinfo>
 
@@ -15,8 +14,6 @@ using namespace std;
 
 vector<Camera*> Camera::cameras;
 unordered_set<MeshRenderer*> Camera::renderers;
-unordered_set<MeshRenderer*> Camera::wRenderers;
-WaterFrameBuffer* Camera::waterFBO;
 
 Camera::Camera() {
 	cameras.push_back(this);
@@ -44,81 +41,16 @@ void Camera::Deserialize(const string& serializedState) {
 }
 
 void Camera::Register(MeshRenderer* renderer) {
-	if (renderer->RendersWater())
-		wRenderers.insert(renderer);
-	else
-		renderers.insert(renderer);
+	renderers.insert(renderer);
 }
 void Camera::Unregister(MeshRenderer* renderer) {
-	if (renderer->RendersWater())
-		wRenderers.erase(renderer);
-	else
-		renderers.erase(renderer);
+	renderers.erase(renderer);
 }
 void Camera::Render() {
-	if (waterFBO == nullptr) {
-		waterFBO = new WaterFrameBuffer();
-		for (auto wr : wRenderers) {
-			wr->GetSharedMaterial()->SetTexture("_WaterFBO_ReflectionSampler", waterFBO->GetReflectionTexture());
-			wr->GetSharedMaterial()->SetTexture("_WaterFBO_RefractionSampler", waterFBO->GetRefractionTexture());
-			wr->GetSharedMaterial()->SetTexture("_WaterFBO_DepthSampler", waterFBO->GetRefractionDepthTexture());
-		}
-	}
-
 	const vector<Light*>* const lights = Light::GetLights();
 	Shader::SetGlobalLights("_Lights", *lights);
 	Shader::SetGlobal1f("_Time", Time::RealtimeSinceStartup());
-
-	RenderReflection();
-	RenderRefraction();
-	glDisable(GL_CLIP_DISTANCE0);
-	Shader::SetGlobal4f("_ClipPlane", vec4(0, -1, 0, 10000));
 	RenderOnce();
-	RenderWater();
-}
-
-void Camera::RenderReflection() {
-	// Set cameras to capture reflection
-	for (auto camera : cameras) {
-		vec3 pos = camera->GetTransform()->GetLocalPosition();
-		pos.y *= -1;
-		camera->GetTransform()->SetLocalPosition(pos);
-
-		vec3 rot = camera->GetTransform()->GetLocalRotation();
-		rot.x = 360 - rot.x;
-		camera->GetTransform()->SetLocalRotation(rot);
-	}
-
-	waterFBO->BindReflectionBuffer();
-	waterFBO->Clear();
-
-	glEnable(GL_CLIP_DISTANCE0);
-	Shader::SetGlobal4f("_ClipPlane", vec4(0, 1, 0, 0));
-	RenderOnce();
-
-	waterFBO->UnbindBuffer();
-
-	// Set cameras back
-	for (auto camera : cameras) {
-		vec3 pos = camera->GetTransform()->GetLocalPosition();
-		pos.y *= -1;
-		camera->GetTransform()->SetLocalPosition(pos);
-
-		vec3 rot = camera->GetTransform()->GetLocalRotation();
-		rot.x = 360 - rot.x;
-		camera->GetTransform()->SetLocalRotation(rot);
-	}
-}
-
-void Camera::RenderRefraction() {
-	waterFBO->BindRefractionBuffer();
-	waterFBO->Clear();
-
-	glEnable(GL_CLIP_DISTANCE0);
-	Shader::SetGlobal4f("_ClipPlane", vec4(0, -1, 0, 0));
-	RenderOnce();
-
-	waterFBO->UnbindBuffer();
 }
 
 void Camera::RenderOnce() {
@@ -140,42 +72,6 @@ void Camera::RenderOnce() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		for (auto renderer : renderers) {
-			if (!renderer->IsEnabled())
-				continue;
-
-			mesh = renderer->GetMesh();
-			mat = renderer->GetMaterial();
-
-			if (mesh == nullptr || mat == nullptr)
-				continue;
-
-			model = renderer->GetGameObject()->GetTransform()->GetModelMatrix();
-
-			mat->Prepare(model, view, proj);
-			mesh->Draw();
-			mat->Unbind();
-		}
-	}
-}
-
-void Camera::RenderWater() {
-	Color clearColor;
-	glm::mat4 model, view, proj;
-	Mesh* mesh;
-	Material* mat;
-
-	for (auto camera : cameras) {
-		Shader::SetGlobal1f("_CameraNear", camera->GetNearClip());
-		Shader::SetGlobal1f("_CameraFar", camera->GetFarClip());
-
-		clearColor = camera->clearColor;
-
-		view = camera->GetViewMatrix();
-		proj = camera->GetProjectionMatrix();
-
-		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-
-		for (auto renderer : wRenderers) {
 			if (!renderer->IsEnabled())
 				continue;
 

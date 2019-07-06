@@ -80,7 +80,7 @@ vec4 Parser::NextVec4() {
 }
 
 Color Parser::NextColor() {
-	int p = (int)text.find("Color");
+	int p = (int)text.find("color");
 	if (p == string::npos) {
 		cout << "Parser error on Color\n";
 		return Color();
