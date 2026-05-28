@@ -23,6 +23,8 @@ protected:
 	OPENGL_ENGINE_API virtual void Deserialize(const std::string& serializedState);
 
 public:
+	OPENGL_ENGINE_API Component();
+
 	OPENGL_ENGINE_API GameObject* GetGameObject() const;
 	OPENGL_ENGINE_API Transform* GetTransform() const;
 	OPENGL_ENGINE_API void Enable(bool enabled);

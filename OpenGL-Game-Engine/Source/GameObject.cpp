@@ -32,10 +32,12 @@ Transform* GameObject::GetTransform() const {
 }
 
 Component* GameObject::AddComponent(const char* name) {
+	cout << "Adding component " << name << endl;
 	Component* comp = ComponentSystem::CreateComponent(name, this);
-	if (comp != nullptr) {
+	if (comp != nullptr)
 		components.push_back(comp);
-	}
+	else
+		cout << "Failed to add component " << name << endl;
 	return comp;
 }
 

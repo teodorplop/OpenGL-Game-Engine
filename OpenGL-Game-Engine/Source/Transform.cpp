@@ -5,6 +5,8 @@
 Transform* Transform::root = new Transform();
 
 Transform::Transform() {
+	parent = nullptr;
+
 	if (root == nullptr) {
 		localPosition = position = glm::vec3(0, 0, 0);
 		localRotation = rotation = glm::vec3(0, 0, 0);

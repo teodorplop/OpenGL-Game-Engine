@@ -23,7 +23,8 @@ Component* ComponentSystem::CreateComponent(std::string name, GameObject* gameOb
 	return component;
 }
 void ComponentSystem::DeserializeComponent(Component* component, const std::string& serializedState) {
-	component->Deserialize(serializedState);
+	if (component != nullptr)
+		component->Deserialize(serializedState);
 }
 void ComponentSystem::DestroyComponent(Component* component) {
 	components.erase(component);

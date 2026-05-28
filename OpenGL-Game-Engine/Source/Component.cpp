@@ -2,6 +2,12 @@
 
 #include "GameObject.h"
 
+Component::Component() {
+	gameObject = nullptr;
+	start = false;
+	enabled = false;
+}
+
 Transform* Component::GetTransform() const {
 	return gameObject->GetTransform();
 }

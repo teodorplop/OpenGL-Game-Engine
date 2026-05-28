@@ -27,6 +27,8 @@ void SetTransform(GameObject* go, pugi::xml_attribute attr) {
 }
 
 void DFS(pugi::xml_node node, Transform* parent) {
+	cout << "Creating GameObject " << node.name() << endl;
+
 	GameObject* go = GameObject::Create(node.name());
 	Transform* tr = go->GetTransform();
 	if (parent != nullptr)
@@ -37,7 +39,8 @@ void DFS(pugi::xml_node node, Transform* parent) {
 	SetTransform(go, *it);
 	for (++it; it != attributes.end(); ++it) {
 		Component* comp = go->AddComponent((*it).name());
-		ComponentSystem::DeserializeComponent(comp, (*it).value());
+		if (comp != nullptr)
+			ComponentSystem::DeserializeComponent(comp, (*it).value());
 	}
 
 	for (auto& child : node.children())
@@ -52,10 +55,11 @@ void Scene::Load(const char* filename) {
 	pugi::xml_parse_result result = doc.load_file(fullPathCStr);
 
 	if (!result) {
-		cout << filename << " Scene XML Error: " << result.description() << ' ' << "XML Error Offset: " << result.offset;
+		cout << fullPath << " Scene XML Error: " << result.description() << ' ' << "XML Error Offset: " << result.offset << endl;
 		return;
 	}
 
+	cout << fullPath << " Scene XML Loaded" << endl;
 	for (auto& root : doc.children())
 		DFS(root, nullptr);
 }

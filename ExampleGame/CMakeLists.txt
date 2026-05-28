@@ -1,5 +1,5 @@
-# Manually include the root main.cpp and recurse into Scripts
-file(GLOB_RECURSE SCRIPT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Assets/Scripts/*.cpp")
+# Manually include the root main.cpp and recurse into Code
+file(GLOB_RECURSE SCRIPT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Code/*.cpp")
 
 # Combine them into one list
 set(GAME_SOURCES 
@@ -30,4 +30,5 @@ endif()
 # Keep your include directories
 target_include_directories(ExampleGame PRIVATE 
     "${CMAKE_SOURCE_DIR}/OpenGL-Game-Engine/Source"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Code"
 )

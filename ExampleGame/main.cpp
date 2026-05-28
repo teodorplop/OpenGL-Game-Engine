@@ -7,8 +7,8 @@
 #include <iostream>
 #include <vector>
 
-#include "Assets/Scripts/CameraController.h"
-#include "Assets/Scripts/FunScript.h"
+#include "Code/CameraController.h"
+#include "Code/FunScript.h"
 
 using namespace glm;
 using namespace std;
