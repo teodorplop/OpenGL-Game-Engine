@@ -2,12 +2,12 @@
 
 #include "Export.h"
 
-#include <include\glm.h>
+#include <glm.h>
 #include <vector>
 
-#include "Buffers\Buffer.h"
-#include "Buffers\VertexArray.h"
-#include "Buffers\IndexBuffer.h"
+#include "Buffers/Buffer.h"
+#include "Buffers/VertexArray.h"
+#include "Buffers/IndexBuffer.h"
 #include "Color.h"
 
 class Mesh {

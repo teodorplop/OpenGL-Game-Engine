@@ -1,7 +1,12 @@
 #pragma once
 
-#ifdef OPENGL_ENGINE_EXPORTS
-#define OPENGL_ENGINE_API __declspec(dllexport)
+#if defined(_WIN32)
+    #ifdef OPENGL_ENGINE_EXPORTS
+        #define OPENGL_ENGINE_API __declspec(dllexport)
+    #else
+        #define OPENGL_ENGINE_API __declspec(dllimport)
+    #endif
 #else
-#define OPENGL_ENGINE_API __declspec(dllimport)
+    // DEFINITELY EMPTY
+    #define OPENGL_ENGINE_API 
 #endif

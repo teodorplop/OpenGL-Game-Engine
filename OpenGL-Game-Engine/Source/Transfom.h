@@ -2,7 +2,7 @@
 
 #include "Export.h"
 #include "Component.h"
-#include <include\glm.h>
+#include <glm.h>
 #include <vector>
 
 class Transform {

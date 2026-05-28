@@ -1,5 +1,5 @@
 #include "Screen.h"
-#include <include\gl.h>
+#include <gl.h>
 
 Window* Screen::window = nullptr;
 

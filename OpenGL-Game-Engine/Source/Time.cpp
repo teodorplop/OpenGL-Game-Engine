@@ -1,6 +1,6 @@
 #include "Time.h"
 
-#include <include/gl.h>
+#include <gl.h>
 
 float Time::lastFrameTime = 0.0f;
 float Time::deltaTime = 0.0f;

@@ -1,7 +1,7 @@
 #include "Material.h"
 
-#include "Utils\XML\pugixml.hpp"
-#include "Utils\Parser.h"
+#include "Utils/XML/pugixml.hpp"
+#include "Utils/Parser.h"
 #include "Texture2D.h"
 
 using namespace std;

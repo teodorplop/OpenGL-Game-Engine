@@ -1,6 +1,6 @@
 #pragma once
 
-#include <include/gl.h>
+#include <gl.h>
 
 // Simple window class, contains a title, width and height.
 class Window {

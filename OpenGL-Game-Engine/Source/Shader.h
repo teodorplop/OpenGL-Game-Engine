@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Export.h"
-#include <include\glm.h>
+#include <glm.h>
 #include <string>
 #include <unordered_map>
 #include <vector>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <OpenGL-Game-Engine.h>
+#include "Component.h"
 #include <glm.h>
 
 class CameraController : public Component {
@@ -19,6 +19,7 @@ private:
 protected:
 	void Start();
 	void Update();
+	void OnDestroy();
 	void OnCollision(GameObject* other);
 	void Deserialize(const std::string& serializedState);
 };

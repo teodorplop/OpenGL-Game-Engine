@@ -1,6 +1,6 @@
 #include "Texture.h"
 #include "Texture2D.h"
-#include <include\gl.h>
+#include <gl.h>
 
 using namespace std;
 

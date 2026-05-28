@@ -6,13 +6,13 @@
 #include <string>
 #include <vector>
 #include <iterator>
-#include "Utils\FileIO.h"
+#include "Utils/FileIO.h"
 
 #include "GameObject.h"
 #include "ComponentSystem.h"
-#include "Utils\Parser.h"
+#include "Utils/Parser.h"
 
-#include "Utils\XML\pugixml.hpp"
+#include "Utils/XML/pugixml.hpp"
 
 using namespace std;
 

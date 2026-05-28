@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <include\glm.h>
+#include <glm.h>
 #include "../Color.h"
 
 // Simple buffer class used to store VBOs

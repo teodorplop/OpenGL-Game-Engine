@@ -1,6 +1,6 @@
 #include "IndexBuffer.h"
 
-#include <include\gl.h>
+#include <gl.h>
 
 using namespace std;
 

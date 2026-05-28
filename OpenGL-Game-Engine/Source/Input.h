@@ -2,7 +2,7 @@
 
 #include "Export.h"
 #include "Window.h"
-#include <include\glm.h>
+#include <glm.h>
 
 class Input {
 private:

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "..\Export.h"
+#include "../Export.h"
 
 #include <string>
-#include <include\glm.h>
-#include "..\Color.h"
+#include <glm.h>
+#include "../Color.h"
 
 class Parser {
 private:

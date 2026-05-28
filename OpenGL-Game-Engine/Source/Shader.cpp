@@ -1,7 +1,7 @@
 #include "Shader.h"
 #include "Utils/FileIO.h"
 
-#include <include\gl.h>
+#include <gl.h>
 #include "Light.h"
 
 #include <filesystem>

@@ -1,11 +1,14 @@
-#include <OpenGL-Game-Engine.h>
+#include "Application.h"
+#include "Component.h"
+#include "ComponentSystem.h"
+#include "Scene.h"
 
 #include <cstdio>
 #include <iostream>
 #include <vector>
 
-#include "Assets\Scripts\CameraController.h"
-#include "Assets\Scripts\FunScript.h"
+#include "Assets/Scripts/CameraController.h"
+#include "Assets/Scripts/FunScript.h"
 
 using namespace glm;
 using namespace std;

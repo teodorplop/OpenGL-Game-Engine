@@ -1,7 +1,7 @@
 #include "MeshRenderer.h"
 
 #include "Camera.h"
-#include "Utils\Parser.h"
+#include "Utils/Parser.h"
 
 MeshRenderer::MeshRenderer() {
 	Camera::Register(this);

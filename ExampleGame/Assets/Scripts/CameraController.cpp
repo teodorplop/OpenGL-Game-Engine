@@ -1,6 +1,12 @@
 #include "CameraController.h"
 
 #include <iostream>
+#include "Input.h"
+#include "Screen.h"
+#include "Utils/Parser.h"
+#include "Transfom.h"
+#include "GameObject.h"
+#include "Time.h"
 
 using namespace glm;
 using namespace std;
@@ -30,6 +36,8 @@ void CameraController::Update() {
 	PerformRotation();
 	PerformMovement();
 }
+
+void CameraController::OnDestroy() {}
 
 void CameraController::OnCollision(GameObject* other) {
 	std::cout << "Camera collision with " << other->name << "\n";

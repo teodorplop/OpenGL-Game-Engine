@@ -2,7 +2,7 @@
 #include "Utils/TextureUtils.h"
 
 #include<cstdio>
-#include<include\gl.h>
+#include<gl.h>
 
 using namespace std;
 

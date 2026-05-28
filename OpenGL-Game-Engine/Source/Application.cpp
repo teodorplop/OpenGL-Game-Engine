@@ -1,44 +1,37 @@
 #include "Application.h"
 
 #include <iostream>
-#include <include/gl.h>
+#include <gl.h>
 
-#include "Utils\RegisterDLLComponents.h"
+#include "Utils/RegisterDLLComponents.h"
 
 #include "Input.h"
 #include "Screen.h"
 #include "Time.h"
 #include "ComponentSystem.h"
 #include "Camera.h"
-#include "Collisions\CollisionManager.h"
+#include "Collisions/CollisionManager.h"
 
 Application* Application::Create(const char* windowName, int width, int height, bool fullscreen) {
 	return new Application(windowName, width, height, fullscreen);
 }
 
 Application::Application(const char* windowName, int width, int height, bool fullscreen) {
-	if (!glfwInit()) {
+	if (!glfwInit())
 		fprintf(stderr, "Failed to initialize glfw. Quit...");
-		Sleep(2000);
-		exit(1);
-	}
 
 	this->window = new Window(windowName, width, height, fullscreen);
 	this->desiredDeltaTime = 1.0f / 60.0f;
 
 	if (!this->window->GetGLFWWindow()) {
 		fprintf(stderr, "Quit...");
-		Sleep(2000);
 		Quit();
 		exit(1);
 	}
 
 	GLenum err = glewInit();
-	if (GLEW_OK != err) {
+	if (GLEW_OK != err)
 		fprintf(stderr, "Failed to initialize glew. Error: %s\n", glewGetErrorString(err));
-		Sleep(2000);
-		exit(1);
-	}
 
 	Input::Handle(window);
 	Screen::Handle(window);

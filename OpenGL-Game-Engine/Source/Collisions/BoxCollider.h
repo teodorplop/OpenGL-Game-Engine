@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Component.h"
-#include <include\glm.h>
+#include <glm.h>
 #include "../Export.h"
 
 class CollisionManager;

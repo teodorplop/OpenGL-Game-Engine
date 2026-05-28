@@ -1,6 +1,6 @@
 #include "Buffer.h"
 
-#include <include\gl.h>
+#include <gl.h>
 
 using namespace std;
 using namespace glm;

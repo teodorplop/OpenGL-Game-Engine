@@ -5,7 +5,7 @@
 
 #include "Export.h"
 
-#include <include\glm.h>
+#include <glm.h>
 #include <unordered_map>
 
 class Texture;

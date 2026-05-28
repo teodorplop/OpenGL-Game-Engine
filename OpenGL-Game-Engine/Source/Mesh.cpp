@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-#include "Utils\ObjLoader.h"
+#include "Utils/ObjLoader.h"
 
 using namespace std;
 using namespace glm;

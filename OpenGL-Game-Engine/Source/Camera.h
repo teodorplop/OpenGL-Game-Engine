@@ -1,6 +1,6 @@
 #pragma once
 
-#include <include\glm.h>
+#include <glm.h>
 #include "Export.h"
 #include "Component.h"
 #include "Color.h"

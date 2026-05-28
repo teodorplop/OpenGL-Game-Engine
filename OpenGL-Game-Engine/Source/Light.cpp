@@ -1,7 +1,7 @@
 #include "Light.h"
 
 #include "Transfom.h"
-#include "Utils\Parser.h"
+#include "Utils/Parser.h"
 
 using namespace glm;
 using namespace std;

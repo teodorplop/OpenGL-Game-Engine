@@ -3,11 +3,11 @@
 #include "GameObject.h"
 #include "Transfom.h"
 #include "Light.h"
-#include "Utils\Parser.h"
+#include "Utils/Parser.h"
 #include "Time.h"
 #include <typeinfo>
 
-#include <include\gl.h>
+#include <gl.h>
 
 using namespace glm;
 using namespace std;

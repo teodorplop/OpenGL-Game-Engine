@@ -1,5 +1,11 @@
 #include "FileIO.h"
-#include <Windows.h>
+
+// Only include Windows.h if we are on Windows
+#ifdef _WIN32
+    #include <Windows.h>
+#endif
+
+using namespace std;
 
 using namespace std;
 

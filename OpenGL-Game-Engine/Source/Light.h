@@ -2,7 +2,7 @@
 
 #include "Component.h"
 #include "Color.h"
-#include <include\glm.h>
+#include <glm.h>
 #include <vector>
 
 #include "Export.h"
