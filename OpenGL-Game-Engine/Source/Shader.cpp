@@ -10,7 +10,7 @@ using namespace std;
 
 unordered_map<string, Shader*> Shader::loadedShaders;
 unordered_map<string, string> Shader::includeShaders;
-const string& Shader::includePath = "Dependencies/Shaders/";
+const string& Shader::includePath = "Assets/Shaders/";
 const string& Shader::path = "Assets/Shaders/";
 
 Shader* Shader::Load(const string& name) {
